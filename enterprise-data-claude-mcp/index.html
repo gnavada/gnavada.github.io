@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>enterprise-data-claude — BigQuery + GitHub MCP for Claude Desktop</title>
+  <meta name="description" content="Config-driven MCP server that gives Claude Desktop direct BigQuery access with automatic anomaly detection, OLS forecasting, and statistical insights.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f1117;
+      --surface: #161b27;
+      --surface2: #1e2535;
+      --accent: #4f8ef7;
+      --accent2: #38d9a9;
+      --text: #e2e8f0;
+      --muted: #8892a4;
+      --border: #2a3347;
+      --radius: 10px;
+    }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Nav */
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2rem; border-bottom: 1px solid var(--border); }
+    .nav-logo { font-weight: 700; font-size: 1rem; color: var(--text); }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 1.5rem; font-size: 0.9rem; color: var(--muted); }
+    .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* Hero */
+    .hero { max-width: 860px; margin: 0 auto; padding: 5rem 2rem 3rem; text-align: center; }
+    .hero-badge { display: inline-block; background: rgba(79,142,247,0.12); color: var(--accent); border: 1px solid rgba(79,142,247,0.3); border-radius: 20px; padding: 0.3rem 0.9rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; line-height: 1.15; margin-bottom: 1.25rem; }
+    .hero h1 em { color: var(--accent); font-style: normal; }
+    .hero p { font-size: 1.15rem; color: var(--muted); max-width: 600px; margin: 0 auto 2.5rem; }
+    .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn { padding: 0.75rem 1.75rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: opacity 0.15s; }
+    .btn:hover { opacity: 0.85; text-decoration: none; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-outline { border: 1px solid var(--border); color: var(--text); }
+
+    /* Terminal demo */
+    .terminal-wrap { max-width: 860px; margin: 3rem auto; padding: 0 2rem; }
+    .terminal { background: #0a0d14; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .terminal-bar { background: var(--surface2); padding: 0.6rem 1rem; display: flex; gap: 6px; align-items: center; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; } .dot-y { background: #febc2e; } .dot-g { background: #28c840; }
+    .terminal-body { padding: 1.5rem; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem; line-height: 1.7; }
+    .t-prompt { color: var(--accent2); }
+    .t-tool { color: var(--accent); }
+    .t-out { color: #a8b5ca; }
+    .t-highlight { color: #fbbf24; }
+    .t-dim { color: var(--muted); }
+
+    /* Architecture */
+    .section { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; }
+    .section-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .section-sub { color: var(--muted); margin-bottom: 2.5rem; }
+    .arch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .arch-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+    .arch-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
+    .arch-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .arch-card p { font-size: 0.85rem; color: var(--muted); }
+    @media (max-width: 640px) { .arch-grid { grid-template-columns: 1fr; } }
+
+    /* CAO envelope */
+    .cao-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .cao-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; }
+    .cao-card h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent); margin-bottom: 0.35rem; }
+    .cao-card p { font-size: 0.85rem; color: var(--muted); }
+    @media (max-width: 640px) { .cao-grid { grid-template-columns: 1fr; } }
+
+    /* Tools */
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.75rem; }
+    .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; }
+    .tool-name { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.82rem; color: var(--accent2); margin-bottom: 0.3rem; }
+    .tool-desc { font-size: 0.82rem; color: var(--muted); }
+
+    /* Setup */
+    .steps { display: grid; gap: 1.5rem; }
+    .step { display: grid; grid-template-columns: 48px 1fr; gap: 1rem; align-items: start; }
+    .step-num { width: 44px; height: 44px; border-radius: 50%; background: rgba(79,142,247,0.12); border: 1px solid rgba(79,142,247,0.3); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; color: var(--accent); flex-shrink: 0; }
+    .step h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .step p { font-size: 0.9rem; color: var(--muted); }
+    pre { background: #0a0d14; border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; font-size: 0.82rem; font-family: 'SF Mono', 'Fira Code', monospace; color: #a8b5ca; overflow-x: auto; margin-top: 0.75rem; line-height: 1.6; }
+    code { font-family: 'SF Mono', 'Fira Code', monospace; background: var(--surface2); border-radius: 4px; padding: 0.15em 0.4em; font-size: 0.87em; }
+
+    /* Config preview */
+    .config-wrap { background: #0a0d14; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.82rem; line-height: 1.8; overflow-x: auto; }
+    .cfg-key { color: var(--accent); }
+    .cfg-val { color: var(--accent2); }
+    .cfg-comment { color: var(--muted); }
+
+    /* Prompts */
+    .prompt-list { display: grid; gap: 0.5rem; }
+    .prompt-item { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem 1.25rem; font-size: 0.9rem; display: flex; align-items: center; gap: 0.75rem; }
+    .prompt-item::before { content: '→'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); text-align: center; padding: 2.5rem 2rem; color: var(--muted); font-size: 0.85rem; }
+    footer a { color: var(--muted); }
+
+    .divider { height: 1px; background: var(--border); max-width: 900px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo"><span>guru</span>navada</a>
+  <div class="nav-links">
+    <a href="/">← All Projects</a>
+    <a href="https://github.com/gnavada/enterprise-data-claude" target="_blank">GitHub</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-badge">MCP Server · BigQuery · GitHub</div>
+  <h1>enterprise-data-<em>claude</em></h1>
+  <p>Give Claude Desktop direct access to BigQuery and GitHub — with automatic anomaly detection, OLS forecasting, and statistical insights wrapped around every query.</p>
+  <div class="hero-cta">
+    <a href="#setup" class="btn btn-primary">Get Started</a>
+    <a href="https://github.com/gnavada/enterprise-data-claude" class="btn btn-outline" target="_blank">View on GitHub</a>
+  </div>
+</div>
+
+<!-- Terminal demo -->
+<div class="terminal-wrap">
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+      <span style="margin-left:0.5rem;font-size:0.8rem;color:#4a5568;">Claude Desktop — enterprise-data-claude</span>
+    </div>
+    <div class="terminal-body">
+      <div><span class="t-prompt">You →</span> Query daily signups from analytics.user_events for the last 90 days and show me any anomalies</div>
+      <div style="margin-top:0.75rem;"><span class="t-tool">▶ run_bigquery_query</span> <span class="t-dim">{ sql: "SELECT date, COUNT(*) as signups FROM...", confirmed: false }</span></div>
+      <div><span class="t-dim">  ✓ Dry run: 2.1 GB scan · within threshold</span></div>
+      <div><span class="t-dim">  ✓ Query complete · 90 rows</span></div>
+      <div style="margin-top:0.5rem;"><span class="t-highlight">⚠ Anomaly · signups · 2026-04-14</span></div>
+      <div class="t-out">  Value: 847 · Expected range: 1,240–1,680 · Severity: flag</div>
+      <div style="margin-top:0.5rem;"><span class="t-highlight">📈 Forecast (OLS · R²=0.91)</span></div>
+      <div class="t-out">  +7 days: 1,510 · +14 days: 1,540 · +30 days: 1,595</div>
+      <div style="margin-top:0.5rem;"><span class="t-highlight">📊 Visualization</span></div>
+      <div class="t-out">  Recommended: Line chart (date on x-axis, signups on y-axis)</div>
+      <div style="margin-top:0.5rem;"><span class="t-highlight">📐 Statistical insights</span></div>
+      <div class="t-out">  CV=0.18 (moderate variance) · No Pareto concentration · Slight upward trend</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Architecture -->
+<div class="section">
+  <div class="section-title">How it works</div>
+  <div class="section-sub">One config file. Claude handles the rest.</div>
+  <div class="arch-grid">
+    <div class="arch-card">
+      <div class="arch-icon">⚙️</div>
+      <h3>Config-driven</h3>
+      <p>One <code>config.yaml</code> sets your GCP project, GitHub orgs, and file paths. No hardcoding, no forking.</p>
+    </div>
+    <div class="arch-card">
+      <div class="arch-icon">🔒</div>
+      <h3>Local credentials</h3>
+      <p>Runs under your existing <code>gcloud</code> Application Default Credentials. No service account keys, no secrets in config.</p>
+    </div>
+    <div class="arch-card">
+      <div class="arch-icon">🧠</div>
+      <h3>CAO Intelligence</h3>
+      <p>Every query result is automatically wrapped with anomaly detection, forecasting, viz suggestions, and statistical insights.</p>
+    </div>
+    <div class="arch-card">
+      <div class="arch-icon">🛡️</div>
+      <h3>Large query gate</h3>
+      <p>Dry-run detects scans over 50 GB and asks for confirmation before executing. Threshold configurable.</p>
+    </div>
+    <div class="arch-card">
+      <div class="arch-icon">📚</div>
+      <h3>Table catalog</h3>
+      <p>Local JSON catalog of BigQuery tables, built by scanning your GitHub repos. Makes <code>search_bq_tables</code> fast and offline.</p>
+    </div>
+    <div class="arch-card">
+      <div class="arch-icon">🔄</div>
+      <h3>Self-calibrating</h3>
+      <p>Use <code>record_feedback</code> to correct anomaly flags. Thresholds auto-adjust per table across sessions.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CAO Envelope -->
+<div class="section">
+  <div class="section-title">CAO Intelligence Envelope</div>
+  <div class="section-sub">Every <code>run_bigquery_query</code> result includes all five layers automatically.</div>
+  <div class="cao-grid">
+    <div class="cao-card">
+      <h3>Anomaly Detection</h3>
+      <p>IQR-based per-column flagging with three severity levels: note, flag, escalate. Thresholds calibrate automatically from your corrections.</p>
+    </div>
+    <div class="cao-card">
+      <h3>OLS Forecasting</h3>
+      <p>Linear regression on time-series columns. Returns R², slope, and 4-period forward projection so you can see where trends are heading.</p>
+    </div>
+    <div class="cao-card">
+      <h3>Visualization Suggestions</h3>
+      <p>Detects column types (date, geo, metric, dimension) and recommends the right chart type — line, bar, scatter, choropleth, or heatmap.</p>
+    </div>
+    <div class="cao-card">
+      <h3>Statistical Insights</h3>
+      <p>Outlier count, coefficient of variation, zero concentration, monotonicity detection, and Pareto distribution check — all automatic.</p>
+    </div>
+    <div class="cao-card">
+      <h3>Session Drift</h3>
+      <p>Tracks key metrics across queries within a session. Flags when the same column shifts more than 20% between queries.</p>
+    </div>
+    <div class="cao-card">
+      <h3>Research Log</h3>
+      <p>Log findings with <code>record_finding</code>, retrieve them with <code>get_findings</code>. Persists across sessions in a local JSON file.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Tools -->
+<div class="section">
+  <div class="section-title">13 tools</div>
+  <div class="section-sub">Available in every Claude Desktop conversation once installed.</div>
+  <div class="tools-grid">
+    <div class="tool-card"><div class="tool-name">run_bigquery_query</div><div class="tool-desc">Execute SQL with full CAO envelope</div></div>
+    <div class="tool-card"><div class="tool-name">list_tables</div><div class="tool-desc">List datasets and tables in GCP projects</div></div>
+    <div class="tool-card"><div class="tool-name">search_bq_tables</div><div class="tool-desc">Fuzzy-search the local table catalog</div></div>
+    <div class="tool-card"><div class="tool-name">get_table_schema</div><div class="tool-desc">Column names, types, and descriptions</div></div>
+    <div class="tool-card"><div class="tool-name">search_table_catalog</div><div class="tool-desc">Find tables by topic or domain keyword</div></div>
+    <div class="tool-card"><div class="tool-name">read_google_sheet</div><div class="tool-desc">Read a Google Sheet by URL</div></div>
+    <div class="tool-card"><div class="tool-name">search_repos</div><div class="tool-desc">Search GitHub repos across configured orgs</div></div>
+    <div class="tool-card"><div class="tool-name">read_repo_file</div><div class="tool-desc">Read any file from a GitHub repo</div></div>
+    <div class="tool-card"><div class="tool-name">health_check</div><div class="tool-desc">Verify gcloud auth, BQ, config, and GitHub</div></div>
+    <div class="tool-card"><div class="tool-name">record_finding</div><div class="tool-desc">Log an observation to the research log</div></div>
+    <div class="tool-card"><div class="tool-name">get_findings</div><div class="tool-desc">Retrieve logged findings</div></div>
+    <div class="tool-card"><div class="tool-name">clear_research_log</div><div class="tool-desc">Clear the research log</div></div>
+    <div class="tool-card"><div class="tool-name">record_feedback</div><div class="tool-desc">Correct anomaly flags to auto-calibrate thresholds</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Setup -->
+<div class="section" id="setup">
+  <div class="section-title">Setup in 4 steps</div>
+  <div class="section-sub">One-command install. No Docker, no cloud deployment.</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <h3>Clone and configure</h3>
+        <p>Copy the example config and fill in your GCP project ID and GitHub token.</p>
+        <pre>git clone https://github.com/gnavada/enterprise-data-claude
+cd enterprise-data-claude
+cp config.example.yaml config.yaml
+# Edit config.yaml</pre>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <h3>Run setup</h3>
+        <p>Installs Python dependencies and registers the MCP in Claude Desktop.</p>
+        <pre>bash setup.sh</pre>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <h3>Authenticate with Google Cloud</h3>
+        <p>The server uses your local credentials — no service account keys needed.</p>
+        <pre>gcloud auth application-default login</pre>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>
+        <h3>Restart Claude Desktop and verify</h3>
+        <p>Press Cmd ⌘ + Q, reopen, then ask:</p>
+        <pre>Run a health check on enterprise-data-claude</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Config preview -->
+<div class="section">
+  <div class="section-title">config.yaml</div>
+  <div class="section-sub">Everything lives in one file — no environment variables required (though they're supported as overrides).</div>
+  <div class="config-wrap">
+    <div><span class="cfg-comment"># config.yaml — gitignored, never committed</span></div>
+    <div>&nbsp;</div>
+    <div><span class="cfg-key">bigquery</span>:</div>
+    <div>&nbsp; <span class="cfg-key">billing_project</span>: <span class="cfg-val">"your-gcp-project-id"</span></div>
+    <div>&nbsp; <span class="cfg-key">projects</span>:</div>
+    <div>&nbsp;&nbsp;&nbsp; - <span class="cfg-val">"your-gcp-project-id"</span></div>
+    <div>&nbsp; <span class="cfg-key">max_scan_bytes</span>: <span class="cfg-val">53687091200</span>&nbsp;&nbsp;<span class="cfg-comment"># 50 GB gate</span></div>
+    <div>&nbsp;</div>
+    <div><span class="cfg-key">github</span>:</div>
+    <div>&nbsp; <span class="cfg-key">token</span>: <span class="cfg-val">""</span>&nbsp;&nbsp;<span class="cfg-comment"># repo:read scope</span></div>
+    <div>&nbsp; <span class="cfg-key">host</span>: <span class="cfg-val">"github.com"</span>&nbsp;&nbsp;<span class="cfg-comment"># or GHE hostname</span></div>
+    <div>&nbsp; <span class="cfg-key">orgs</span>:</div>
+    <div>&nbsp;&nbsp;&nbsp; - <span class="cfg-val">"your-github-org"</span></div>
+    <div>&nbsp;</div>
+    <div><span class="cfg-key">context</span>:</div>
+    <div>&nbsp; <span class="cfg-key">org_name</span>: <span class="cfg-val">"Your Organization"</span></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- First prompts -->
+<div class="section">
+  <div class="section-title">First prompts to try</div>
+  <div class="section-sub">After setup, start a new chat in Claude Desktop.</div>
+  <div class="prompt-list">
+    <div class="prompt-item">Run a health check on enterprise-data-claude</div>
+    <div class="prompt-item">List available BigQuery tables in my analytics dataset</div>
+    <div class="prompt-item">Query daily active users from the last 30 days and flag any anomalies</div>
+    <div class="prompt-item">What tables in my catalog contain revenue or billing data?</div>
+    <div class="prompt-item">Search repos for any SQL that references the orders table</div>
+    <div class="prompt-item">Record a finding: revenue dropped 8% week-over-week starting April 14</div>
+    <div class="prompt-item">Show me a forecast for the next 30 days based on this trend</div>
+  </div>
+</div>
+
+<footer>
+  <p>Built by <a href="/">Guru Navada</a> · <a href="https://github.com/gnavada/enterprise-data-claude" target="_blank">GitHub</a></p>
+</footer>
+
+</body>
+</html>
