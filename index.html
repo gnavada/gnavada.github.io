@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>customer-intel-mcp — Customer Intelligence for Claude Desktop</title>
+  <meta name="description" content="A config-driven MCP server that gives Claude the ability to do customer-level behavioral research, cohort analysis, and PM artifact generation — all via natural language." />
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --border: #2a2d3e;
+      --accent: #7c6cf8;
+      --accent-soft: #3d3770;
+      --green: #22c55e;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --code-bg: #0d1117;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Nav */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(15,17,23,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .nav-logo { font-weight: 700; font-size: 1rem; color: var(--text); letter-spacing: -0.02em; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 1.5rem; font-size: 0.875rem; color: var(--muted); }
+    .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .nav-cta { background: var(--accent); color: #fff; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.875rem; font-weight: 600; }
+    .nav-cta:hover { background: #6a5ce6; text-decoration: none; }
+
+    /* Hero */
+    .hero { text-align: center; padding: 6rem 2rem 4rem; max-width: 800px; margin: 0 auto; }
+    .badge { display: inline-block; background: var(--accent-soft); color: var(--accent); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.25rem 0.75rem; border-radius: 999px; margin-bottom: 1.5rem; border: 1px solid var(--accent); }
+    h1 { font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 1.25rem; }
+    h1 .highlight { color: var(--accent); }
+    .hero p { font-size: 1.125rem; color: var(--muted); max-width: 560px; margin: 0 auto 2.5rem; }
+    .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9375rem; cursor: pointer; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #6a5ce6; text-decoration: none; }
+    .btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--border); text-decoration: none; }
+
+    /* Terminal demo */
+    .demo { margin: 4rem auto; max-width: 780px; padding: 0 2rem; }
+    .terminal { background: var(--code-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .terminal-bar { background: var(--surface); padding: 0.75rem 1rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--border); }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-r { background: #ef4444; }
+    .dot-y { background: #f59e0b; }
+    .dot-g { background: var(--green); }
+    .terminal-label { margin-left: 0.5rem; font-size: 0.75rem; color: var(--muted); font-family: monospace; }
+    .terminal-body { padding: 1.5rem; font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace; font-size: 0.8125rem; line-height: 1.7; }
+    .t-prompt { color: var(--green); }
+    .t-tool { color: var(--accent); }
+    .t-result { color: #94a3b8; }
+    .t-finding { color: #fbbf24; font-weight: 600; }
+    .t-key { color: #34d399; }
+
+    /* How it works */
+    .section { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
+    .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+    h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 1rem; }
+    .section > p { color: var(--muted); margin-bottom: 2.5rem; max-width: 560px; }
+
+    .arch { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin: 2rem 0 3rem; font-size: 0.875rem; }
+    .arch-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1.25rem; text-align: center; min-width: 140px; }
+    .arch-box strong { display: block; font-size: 0.9375rem; margin-bottom: 0.25rem; }
+    .arch-box span { color: var(--muted); font-size: 0.75rem; }
+    .arch-arrow { color: var(--muted); font-size: 1.25rem; }
+
+    /* Tools grid */
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+    .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; }
+    .tool-card h3 { font-size: 0.8125rem; font-family: monospace; color: var(--accent); margin-bottom: 0.5rem; }
+    .tool-card p { font-size: 0.8125rem; color: var(--muted); line-height: 1.5; }
+    .tool-group-label { grid-column: 1 / -1; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-top: 1rem; }
+
+    /* Config */
+    .code-block { background: var(--code-bg); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; font-family: monospace; font-size: 0.8125rem; line-height: 1.8; overflow-x: auto; }
+    .code-comment { color: #6b7280; }
+    .code-key { color: #7dd3fc; }
+    .code-val { color: #86efac; }
+    .code-section { color: var(--accent); font-weight: 600; }
+
+    /* Steps */
+    .steps { display: grid; gap: 1.5rem; }
+    .step { display: flex; gap: 1.25rem; }
+    .step-num { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; background: var(--accent-soft); border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 0.8125rem; font-weight: 700; color: var(--accent); }
+    .step-body h3 { font-size: 1rem; margin-bottom: 0.25rem; }
+    .step-body p { color: var(--muted); font-size: 0.875rem; }
+    .step-body code { background: var(--surface); border: 1px solid var(--border); padding: 0.125rem 0.375rem; border-radius: 4px; font-size: 0.8125rem; }
+
+    /* Prompts */
+    .prompts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
+    .prompt-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; cursor: pointer; transition: border-color 0.15s; }
+    .prompt-card:hover { border-color: var(--accent); }
+    .prompt-card .tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.5rem; }
+    .prompt-card p { font-size: 0.875rem; color: var(--text); font-style: italic; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.8125rem; color: var(--muted); }
+    footer a { color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">customer<span>-intel</span>-mcp</div>
+  <div class="nav-links">
+    <a href="#how-it-works">How it works</a>
+    <a href="#tools">Tools</a>
+    <a href="#setup">Setup</a>
+    <a href="#prompts">Prompts</a>
+  </div>
+  <a class="nav-cta" href="https://github.com/gnavada/customer-intel-mcp">GitHub →</a>
+</nav>
+
+<section class="hero">
+  <div class="badge">Open Source · FastMCP · BigQuery</div>
+  <h1>Customer intelligence<br /><span class="highlight">for Claude Desktop</span></h1>
+  <p>26 research tools that give Claude the ability to analyze your customer data via natural language. No SQL. No dashboards. Answers in seconds.</p>
+  <div class="hero-ctas">
+    <a class="btn btn-primary" href="#setup">Get started →</a>
+    <a class="btn btn-secondary" href="https://github.com/gnavada/customer-intel-mcp">View on GitHub</a>
+  </div>
+</section>
+
+<div class="demo">
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="dot dot-r"></div>
+      <div class="dot dot-y"></div>
+      <div class="dot dot-g"></div>
+      <span class="terminal-label">Claude Desktop — customer-intel-mcp</span>
+    </div>
+    <div class="terminal-body">
+      <div class="t-prompt">You → </div>
+      <div style="margin-left:2rem; color: #e2e8f0; margin-bottom: 1rem;">"What do my churning customers have in common?"</div>
+
+      <div class="t-tool">▶ get_cohort_insight · churning customers · n=500</div>
+      <div class="t-tool" style="margin-bottom:1rem;">▶ run_bigquery_query · confirmed=true</div>
+
+      <div class="t-finding">⚡ Key Finding</div>
+      <div style="margin-left:2rem; color: #e2e8f0; margin-bottom:0.75rem;">
+        <strong>Churning customers are not disengaged — they're financially distressed.</strong><br/>
+        Median credit utilization 91% vs 43% fleet. 3x higher collections rate.<br/>
+        Login frequency is unchanged — they're checking in, but not converting.
+      </div>
+
+      <div class="t-key">🔑 Key finding:</div>
+      <div style="margin-left:2rem; color: #e2e8f0; margin-bottom:0.75rem;">
+        Churn here is a financial stress signal, not an engagement failure —<br/>
+        interventions should offer guidance, not product pitches.
+      </div>
+
+      <div class="t-result">➡️ Next: compare_cohorts, get_intervention_impact, log_finding</div>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="how-it-works">
+  <div class="section-label">Architecture</div>
+  <h2>How it works</h2>
+  <p>customer-intel-mcp sits between Claude and your BigQuery tables. It generates SQL, routes it through your BigQuery MCP, and renders structured findings.</p>
+
+  <div class="arch">
+    <div class="arch-box">
+      <strong>You</strong>
+      <span>Natural language</span>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box" style="border-color: var(--accent);">
+      <strong>Claude Desktop</strong>
+      <span>customer-intel-mcp</span>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box">
+      <strong>BigQuery MCP</strong>
+      <span>Any BQ MCP</span>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box">
+      <strong>Your BQ tables</strong>
+      <span>via config.yaml</span>
+    </div>
+  </div>
+
+  <p><strong>All table paths, column names, and segment definitions come from <code>config.yaml</code></strong> — a single file you fill in once. No hardcoded schema assumptions.</p>
+</section>
+
+<section class="section" id="tools">
+  <div class="section-label">Tools</div>
+  <h2>26 research tools</h2>
+  <p>Every tool follows the same delivery standard: structured output, signal emojis, key finding callout, and next steps. Never raw JSON.</p>
+
+  <div class="tools-grid">
+    <div class="tool-group-label">Customer Intelligence</div>
+    <div class="tool-card"><h3>get_customer_persona</h3><p>Complete behavioral + profile snapshot for any customer from your configured tables.</p></div>
+    <div class="tool-card"><h3>get_customer_story</h3><p>Plain-English narrative portrait tailored to designer, copywriter, PM, or exec audience.</p></div>
+    <div class="tool-card"><h3>get_customer_baseline</h3><p>Lightweight behavioral profile optimized for anomaly scoring.</p></div>
+
+    <div class="tool-group-label">Cohort Research</div>
+    <div class="tool-card"><h3>get_cohort_insight</h3><p>Aggregate behavioral patterns across a cohort. Answers "why" questions at scale.</p></div>
+    <div class="tool-card"><h3>compare_cohorts</h3><p>Diff two cohorts side-by-side, surfaces signals that predict success or failure.</p></div>
+    <div class="tool-card"><h3>find_customers_like</h3><p>Translate a plain-English description into real customers with matching profiles.</p></div>
+    <div class="tool-card"><h3>get_segment_persona</h3><p>Sample N customers from any named segment or SQL filter.</p></div>
+    <div class="tool-card"><h3>get_segment_drift</h3><p>Measure how a cohort's signals changed between two dates.</p></div>
+
+    <div class="tool-group-label">Fleet Analysis</div>
+    <div class="tool-card"><h3>get_opportunity_map</h3><p>Fleet-level scan of unrealized value across all segments.</p></div>
+    <div class="tool-card"><h3>get_power_customer_profile</h3><p>Signal fingerprint of your best customers vs. the average fleet member.</p></div>
+    <div class="tool-card"><h3>score_login_event</h3><p>Score a session event against a customer's behavioral baseline for anomaly detection.</p></div>
+    <div class="tool-card"><h3>get_fleet_anomaly_summary</h3><p>Fleet-level behavioral dashboard for a given date.</p></div>
+
+    <div class="tool-group-label">Pre-Build Intelligence</div>
+    <div class="tool-card"><h3>get_product_fit_score</h3><p>TAM/SAM/SOM sizing for a proposed feature from your actual customer base.</p></div>
+    <div class="tool-card"><h3>get_feature_reaction</h3><p>Predict how a cohort reacts to a feature across 5 dimensions before you build it.</p></div>
+    <div class="tool-card"><h3>score_copy</h3><p>Score customer-facing copy against a cohort across relevance, tone, urgency, trust, CTA.</p></div>
+    <div class="tool-card"><h3>get_market_sizing</h3><p>Rigorous TAM/SAM/SOM from your real customer data with segment breakdown.</p></div>
+    <div class="tool-card"><h3>get_hypothesis</h3><p>Test a hypothesis against your customer data. Returns SUPPORTED/REFUTED/INCONCLUSIVE.</p></div>
+
+    <div class="tool-group-label">Impact Measurement</div>
+    <div class="tool-card"><h3>get_intervention_impact</h3><p>Pre/post signal movement for a campaign or product launch.</p></div>
+    <div class="tool-card"><h3>get_customer_next_action</h3><p>Best action for a specific customer or cohort right now — individual or batch mode.</p></div>
+
+    <div class="tool-group-label">Research Memory</div>
+    <div class="tool-card"><h3>log_finding</h3><p>Save a research finding to research_log.json. Persists across Claude sessions.</p></div>
+    <div class="tool-card"><h3>get_research_log</h3><p>Retrieve and search prior findings. Your research memory across sessions.</p></div>
+    <div class="tool-card"><h3>clear_research_log</h3><p>Clear all or partial research log with preview mode and tag-based filtering.</p></div>
+    <div class="tool-card"><h3>export_research_brief</h3><p>Turn saved findings into a PRD background, Slack post, exec summary, or research review.</p></div>
+    <div class="tool-card"><h3>get_research_agenda</h3><p>Prioritized list of research questions based on your log and open follow-ups.</p></div>
+    <div class="tool-card"><h3>get_weekly_brief</h3><p>Weekly synthesis: fleet health, research summary, open questions, and focus for next week.</p></div>
+  </div>
+</section>
+
+<section class="section" id="setup">
+  <div class="section-label">Setup</div>
+  <h2>Up in 4 steps</h2>
+  <p>One config file. One install script. Works with any BigQuery MCP.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Clone the repo</h3>
+        <p><code>git clone https://github.com/gnavada/customer-intel-mcp.git && cd customer-intel-mcp</code></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Fill in config.yaml</h3>
+        <p><code>cp config.example.yaml config.yaml</code> — then edit with your BigQuery project, dataset, table names, and column mappings. Takes ~10 minutes.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Run setup.sh</h3>
+        <p><code>bash setup.sh</code> — creates a Python venv, installs dependencies, and registers the MCP in Claude Desktop automatically.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>Restart Claude Desktop</h3>
+        <p>Quit and reopen Claude Desktop. Ask: <em>"Are you connected to customer-intel-mcp?"</em> — you're ready.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 2.5rem;">
+    <div class="section-label" style="margin-bottom: 0.5rem;">config.yaml preview</div>
+    <div class="code-block">
+<span class="code-section">bigquery:</span>
+  <span class="code-key">project</span>: <span class="code-val">"my-company-analytics"</span>
+  <span class="code-key">dataset</span>: <span class="code-val">"customer_analytics"</span>
+
+<span class="code-section">tables:</span>
+  <span class="code-key">customer_daily</span>: <span class="code-val">"my-company-analytics.customer_analytics.customer_daily"</span>
+  <span class="code-key">events</span>: <span class="code-val">"my-company-analytics.customer_analytics.events"</span>
+
+<span class="code-section">columns:</span>
+  <span class="code-key">customer_id</span>: <span class="code-val">"user_id"</span>          <span class="code-comment"># your actual column name</span>
+  <span class="code-key">segment</span>: <span class="code-val">"tier"</span>             <span class="code-comment"># maps to your segment column</span>
+  <span class="code-key">score</span>: <span class="code-val">"health_score"</span>     <span class="code-comment"># any numeric health/value score</span>
+  <span class="code-key">tenure_days</span>: <span class="code-val">"days_since_signup"</span>
+  <span class="code-key">active_day_rate</span>: <span class="code-val">"engagement_rate"</span>
+
+<span class="code-section">segments:</span>
+  <span class="code-comment"># Define your segments — name, SQL filter, aliases</span>
+  - <span class="code-key">name</span>: <span class="code-val">"Champions"</span>
+    <span class="code-key">filter</span>: <span class="code-val">"tier = 'champions'"</span>
+  - <span class="code-key">name</span>: <span class="code-val">"At Risk"</span>
+    <span class="code-key">filter</span>: <span class="code-val">"tier = 'at_risk' OR days_since_login &gt; 30"</span>
+
+<span class="code-section">context:</span>
+  <span class="code-key">company_name</span>: <span class="code-val">"Acme Corp"</span>
+  <span class="code-key">customer_noun</span>: <span class="code-val">"user"</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="prompts">
+  <div class="section-label">Ready-to-use prompts</div>
+  <h2>First things to try</h2>
+  <p>Copy any of these into Claude Desktop once customer-intel-mcp is connected.</p>
+
+  <div class="prompts-grid">
+    <div class="prompt-card"><div class="tag">Fleet</div><p>"Get an opportunity map of my entire customer base"</p></div>
+    <div class="prompt-card"><div class="tag">Churn</div><p>"What do my churning customers have in common?"</p></div>
+    <div class="prompt-card"><div class="tag">Segments</div><p>"Compare my champions segment to my at-risk segment"</p></div>
+    <div class="prompt-card"><div class="tag">Research</div><p>"Find customers who are highly engaged but haven't upgraded yet"</p></div>
+    <div class="prompt-card"><div class="tag">Product</div><p>"How would my at-risk customers react to a win-back offer?"</p></div>
+    <div class="prompt-card"><div class="tag">Copy</div><p>"Score this email subject line against my churning segment: 'We miss you — here's what's new'"</p></div>
+    <div class="prompt-card"><div class="tag">Sizing</div><p>"How big is the upsell opportunity in my engaged-but-not-premium segment?"</p></div>
+    <div class="prompt-card"><div class="tag">Hypothesis</div><p>"Test this hypothesis: customers who engage in the first 7 days retain better at 30 days"</p></div>
+    <div class="prompt-card"><div class="tag">PM artifact</div><p>"Generate an exec summary of everything I've learned about churn this quarter"</p></div>
+  </div>
+</section>
+
+<footer>
+  <p>customer-intel-mcp · <a href="https://github.com/gnavada/customer-intel-mcp">GitHub</a> · Built with FastMCP · MIT License</p>
+</footer>
+
+</body>
+</html>
