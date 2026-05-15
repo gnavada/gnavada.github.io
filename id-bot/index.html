@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ID-Bot — Trigger-Driven AI Agent Platform</title>
-  <meta name="description" content="Define an agent in plain English. ID-Bot watches for your trigger, reasons about it, and executes the task autonomously in a real browser." />
+  <title>ID-Bot — Autonomous Breach Response Agent</title>
+  <meta name="description" content="ID-Bot finds its own triggers. It monitors breach databases and dark web feeds 24/7 — and the moment your credentials appear, it acts." />
   <style>
     :root {
       --bg: #080b12;
@@ -15,6 +15,8 @@
       --accent-soft: #1e3a5f;
       --accent2: #8b5cf6;
       --accent2-soft: #2e1f4f;
+      --red: #ef4444;
+      --red-soft: rgba(239,68,68,0.12);
       --green: #10b981;
       --amber: #f59e0b;
       --text: #e2e8f0;
@@ -22,6 +24,7 @@
       --muted2: #94a3b8;
       --code-bg: #050810;
       --glow: rgba(59,130,246,0.12);
+      --glow2: rgba(139,92,246,0.12);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -32,7 +35,7 @@
     /* ── Nav ── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(8,11,18,0.85); backdrop-filter: blur(16px);
+      background: rgba(8,11,18,0.9); backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
       padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px;
     }
@@ -48,30 +51,36 @@
     /* ── Hero ── */
     .hero {
       position: relative; text-align: center;
-      padding: 7rem 2rem 5rem; max-width: 860px; margin: 0 auto;
+      padding: 7rem 2rem 5rem; max-width: 900px; margin: 0 auto;
       overflow: hidden;
     }
     .hero-glow {
-      position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
-      width: 600px; height: 400px;
-      background: radial-gradient(ellipse at center, rgba(59,130,246,0.18) 0%, transparent 70%);
+      position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse at center, rgba(239,68,68,0.1) 0%, rgba(59,130,246,0.12) 40%, transparent 70%);
       pointer-events: none;
     }
     .badge {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      background: var(--accent-soft); color: var(--accent);
+      background: var(--red-soft); color: var(--red);
       font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
       padding: 0.3rem 0.9rem; border-radius: 999px; margin-bottom: 1.75rem;
-      border: 1px solid rgba(59,130,246,0.3);
+      border: 1px solid rgba(239,68,68,0.25);
+      animation: pulse-badge 2.5s ease-in-out infinite;
     }
-    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); }
+    @keyframes pulse-badge {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.3); }
+      50% { box-shadow: 0 0 0 6px rgba(239,68,68,0); }
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); box-shadow: 0 0 6px var(--red); }
     h1 {
-      font-size: clamp(2.25rem, 6vw, 3.75rem); font-weight: 800;
+      font-size: clamp(2.25rem, 6vw, 3.875rem); font-weight: 800;
       letter-spacing: -0.05em; line-height: 1.05; margin-bottom: 1.5rem;
     }
-    h1 .line1 { display: block; }
-    h1 .line2 { display: block; background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-sub { font-size: 1.125rem; color: var(--muted2); max-width: 560px; margin: 0 auto 2.75rem; line-height: 1.65; }
+    h1 .line1 { display: block; color: var(--text); }
+    h1 .line2 { display: block; background: linear-gradient(90deg, var(--red) 0%, var(--accent) 50%, var(--accent2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { font-size: 1.125rem; color: var(--muted2); max-width: 600px; margin: 0 auto 2.75rem; line-height: 1.65; }
+    .hero-sub strong { color: var(--text); }
     .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3.5rem; }
     .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.6rem; border-radius: 8px; font-weight: 600; font-size: 0.9375rem; cursor: pointer; transition: all 0.15s; }
     .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 0 24px rgba(59,130,246,0.3); }
@@ -79,29 +88,29 @@
     .btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
     .btn-secondary:hover { background: var(--surface2); text-decoration: none; border-color: var(--accent); }
 
-    /* ── Agent Flow Diagram ── */
-    .flow-wrap { max-width: 860px; margin: 0 auto 1rem; padding: 0 2rem; }
-    .flow {
+    /* ── Breach timeline ── */
+    .timeline-wrap { max-width: 860px; margin: 0 auto 1rem; padding: 0 2rem; }
+    .timeline-label { text-align: center; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem; }
+    .timeline {
       background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
-      padding: 2rem; display: flex; align-items: center; justify-content: center;
-      gap: 0; flex-wrap: wrap;
+      padding: 1.75rem 2rem; display: flex; align-items: center; justify-content: space-between;
+      gap: 0; overflow-x: auto;
     }
-    .flow-step {
-      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
-      padding: 0 1.25rem; text-align: center; min-width: 100px;
-    }
-    .flow-icon { font-size: 1.5rem; margin-bottom: 0.25rem; }
-    .flow-label { font-size: 0.75rem; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
-    .flow-sub { font-size: 0.65rem; color: var(--muted); }
-    .flow-arrow { color: var(--muted); font-size: 1.25rem; padding: 0 0.25rem; flex-shrink: 0; }
+    .tl-step { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; min-width: 90px; text-align: center; }
+    .tl-icon { font-size: 1.4rem; margin-bottom: 0.2rem; }
+    .tl-label { font-size: 0.72rem; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
+    .tl-sub { font-size: 0.62rem; color: var(--muted); }
+    .tl-arrow { color: var(--border); font-size: 1.25rem; padding: 0 0.4rem; flex-shrink: 0; }
+    .tl-step.active .tl-label { color: var(--red); }
+    .tl-step.active .tl-icon { filter: drop-shadow(0 0 6px rgba(239,68,68,0.5)); }
 
     /* ── Section base ── */
     .section { max-width: 1040px; margin: 0 auto; padding: 5rem 2rem; }
     .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem; }
     h2 { font-size: clamp(1.6rem, 3.5vw, 2.25rem); font-weight: 800; letter-spacing: -0.04em; margin-bottom: 1rem; }
-    .section-intro { color: var(--muted2); font-size: 1.0625rem; max-width: 560px; margin-bottom: 3rem; line-height: 1.6; }
+    .section-intro { color: var(--muted2); font-size: 1.0625rem; max-width: 580px; margin-bottom: 3rem; line-height: 1.6; }
 
-    /* ── How it works terminal ── */
+    /* ── Terminal demo ── */
     .demo-wrap { max-width: 860px; margin: 0 auto; padding: 0 2rem 5rem; }
     .terminal { background: var(--code-bg); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: 0 0 60px rgba(0,0,0,0.5); }
     .terminal-bar { background: var(--surface); padding: 0.875rem 1.25rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--border); }
@@ -110,26 +119,28 @@
     .terminal-label { margin-left: 0.5rem; font-size: 0.75rem; color: var(--muted); font-family: monospace; }
     .terminal-body { padding: 1.75rem; font-family: "JetBrains Mono", "Fira Code", monospace; font-size: 0.8125rem; line-height: 1.8; }
     .t-comment { color: #374151; }
-    .t-trigger { color: var(--amber); }
+    .t-alert { color: var(--red); }
+    .t-scan { color: var(--amber); }
     .t-decision { color: var(--accent2); }
     .t-action { color: var(--accent); }
     .t-success { color: var(--green); }
     .t-muted { color: var(--muted); }
     .t-block { margin-bottom: 1.25rem; }
 
-    /* ── Trigger sources ── */
-    .sources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
-    .source-card {
+    /* ── Intelligence sources grid ── */
+    .intel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1rem; }
+    .intel-card {
       background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
       padding: 1.5rem; transition: border-color 0.15s, box-shadow 0.15s;
     }
-    .source-card:hover { border-color: var(--accent); box-shadow: 0 0 24px var(--glow); }
-    .source-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
-    .source-card h3 { font-size: 0.9375rem; font-weight: 700; margin-bottom: 0.4rem; }
-    .source-card p { font-size: 0.8125rem; color: var(--muted2); line-height: 1.5; }
-    .source-badge { display: inline-block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.15rem 0.45rem; border-radius: 4px; margin-top: 0.75rem; }
-    .badge-push { background: rgba(16,185,129,0.15); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
+    .intel-card:hover { border-color: var(--accent); box-shadow: 0 0 24px var(--glow); }
+    .intel-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
+    .intel-card h3 { font-size: 0.9375rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .intel-card p { font-size: 0.8125rem; color: var(--muted2); line-height: 1.5; }
+    .intel-badge { display: inline-block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.15rem 0.45rem; border-radius: 4px; margin-top: 0.75rem; }
+    .badge-live { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
     .badge-poll { background: rgba(245,158,11,0.15); color: var(--amber); border: 1px solid rgba(245,158,11,0.3); }
+    .badge-push { background: rgba(16,185,129,0.15); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
 
     /* ── Deployment tiers ── */
     .tiers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
@@ -149,16 +160,14 @@
     .tier-features li { font-size: 0.8125rem; color: var(--muted2); display: flex; align-items: flex-start; gap: 0.6rem; }
     .tier-features li::before { content: "✓"; color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 0.05rem; }
 
-    /* ── Clients section ── */
+    /* ── Use cases ── */
     .clients-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
-    .client-card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem;
-    }
+    .client-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
     .client-tag { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent2); margin-bottom: 0.75rem; }
     .client-card h3 { font-size: 0.9375rem; font-weight: 700; margin-bottom: 0.4rem; }
     .client-card p { font-size: 0.8125rem; color: var(--muted2); line-height: 1.5; }
 
-    /* ── Config example ── */
+    /* ── Config ── */
     .config-wrap { background: var(--code-bg); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; overflow-x: auto; }
     .config-wrap pre { font-family: "JetBrains Mono", "Fira Code", monospace; font-size: 0.8125rem; line-height: 1.9; }
     .c-comment { color: #374151; }
@@ -166,9 +175,8 @@
     .c-val { color: #86efac; }
     .c-str { color: #fca5a5; }
     .c-section { color: var(--accent2); font-weight: 600; }
-    .c-arrow { color: var(--muted); }
 
-    /* ── CTA section ── */
+    /* ── CTA ── */
     .cta-section {
       text-align: center; padding: 6rem 2rem;
       background: linear-gradient(180deg, transparent, var(--surface) 40%, var(--surface) 60%, transparent);
@@ -178,26 +186,21 @@
     .cta-glow {
       position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
       width: 500px; height: 300px;
-      background: radial-gradient(ellipse, rgba(139,92,246,0.15) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(239,68,68,0.1) 0%, rgba(139,92,246,0.1) 50%, transparent 70%);
       pointer-events: none;
     }
     .cta-section h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 800; letter-spacing: -0.04em; margin-bottom: 1rem; }
     .cta-section p { color: var(--muted2); font-size: 1.0625rem; max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.6; }
 
-    /* ── Divider ── */
     .divider { border: none; border-top: 1px solid var(--border); }
-
-    /* ── Footer ── */
     footer { padding: 2rem; text-align: center; font-size: 0.8125rem; color: var(--muted); }
     footer a { color: var(--muted); }
     footer a:hover { color: var(--text); text-decoration: none; }
 
-    /* ── Responsive ── */
     @media (max-width: 640px) {
       .nav-links { display: none; }
-      .flow { gap: 0.5rem; }
-      .flow-step { min-width: 70px; padding: 0 0.5rem; }
-      .flow-arrow { display: none; }
+      .timeline { gap: 0.5rem; }
+      .tl-arrow { display: none; }
     }
   </style>
 </head>
@@ -211,7 +214,7 @@
   </div>
   <div class="nav-links">
     <a href="#how-it-works">How it works</a>
-    <a href="#triggers">Triggers</a>
+    <a href="#intel">Intel sources</a>
     <a href="#deploy">Deploy</a>
     <a href="#config">Config</a>
   </div>
@@ -223,56 +226,57 @@
   <div class="hero-glow"></div>
   <div class="badge">
     <span class="badge-dot"></span>
-    Early Access · AI Agent Platform
+    Monitoring · 24/7 Breach Intelligence
   </div>
   <h1>
-    <span class="line1">Your trigger fires.</span>
-    <span class="line2">The agent handles it.</span>
+    <span class="line1">No trigger needed.</span>
+    <span class="line2">ID-Bot finds its own.</span>
   </h1>
   <p class="hero-sub">
-    Define an agent in plain English — what to watch for and what to do.
-    ID-Bot detects the trigger, reasons about it, and executes the task
-    autonomously in a real browser.
+    ID-Bot continuously monitors breach databases and dark web feeds.
+    The moment your credentials surface anywhere on the internet,
+    <strong>it acts — before you even know it happened.</strong>
   </p>
   <div class="hero-ctas">
     <a class="btn btn-primary" href="mailto:email2navada@gmail.com?subject=Access%20request%3A%20ID-Bot&body=Hi%20Guru%2C%0A%0AI%27d%20like%20access%20to%20ID-Bot.%0A%0AName%3A%0AOrg%2FContext%3A%0AUse%20case%3A%0A">
       Request Access →
     </a>
-    <a class="btn btn-secondary" href="#how-it-works">See how it works</a>
+    <a class="btn btn-secondary" href="#how-it-works">See it in action</a>
   </div>
 </section>
 
-<!-- Flow diagram -->
-<div class="flow-wrap">
-  <div class="flow">
-    <div class="flow-step">
-      <div class="flow-icon">📡</div>
-      <div class="flow-label">Trigger</div>
-      <div class="flow-sub">Email · Webhook · API · Web</div>
+<!-- Breach detection timeline -->
+<div class="timeline-wrap">
+  <div class="timeline-label">What happens when a breach is detected</div>
+  <div class="timeline">
+    <div class="tl-step active">
+      <div class="tl-icon">🔍</div>
+      <div class="tl-label">Breach detected</div>
+      <div class="tl-sub">HIBP · DeHashed · dark web</div>
     </div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step">
-      <div class="flow-icon">🧠</div>
-      <div class="flow-label">Decision</div>
-      <div class="flow-sub">Claude evaluates match</div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-step">
+      <div class="tl-icon">🧠</div>
+      <div class="tl-label">Claude evaluates</div>
+      <div class="tl-sub">credentials exposed?</div>
     </div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step">
-      <div class="flow-icon">🌐</div>
-      <div class="flow-label">Execution</div>
-      <div class="flow-sub">Real browser · Claude agent</div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-step">
+      <div class="tl-icon">🌐</div>
+      <div class="tl-label">Agent executes</div>
+      <div class="tl-sub">real browser · real site</div>
     </div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step">
-      <div class="flow-icon">🔐</div>
-      <div class="flow-label">Storage</div>
-      <div class="flow-sub">Encrypted vault</div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-step">
+      <div class="tl-icon">🔐</div>
+      <div class="tl-label">Credentials rotated</div>
+      <div class="tl-sub">saved to vault</div>
     </div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step">
-      <div class="flow-icon">🔔</div>
-      <div class="flow-label">Notify</div>
-      <div class="flow-sub">Email · Slack · Webhook</div>
+    <div class="tl-arrow">→</div>
+    <div class="tl-step">
+      <div class="tl-icon">🔔</div>
+      <div class="tl-label">You're notified</div>
+      <div class="tl-sub">Slack · email · webhook</div>
     </div>
   </div>
 </div>
@@ -284,93 +288,95 @@
       <div class="dot dot-r"></div>
       <div class="dot dot-y"></div>
       <div class="dot dot-g"></div>
-      <span class="terminal-label">ID-Bot — live session</span>
+      <span class="terminal-label">ID-Bot — autonomous breach response · live session</span>
     </div>
     <div class="terminal-body">
 
       <div class="t-block">
-        <div class="t-comment">// Agent: "Password Guardian"</div>
-        <div class="t-comment">// Trigger rule: "when I get a breach notification email"</div>
+        <div class="t-comment">// No trigger configured. ID-Bot found this on its own.</div>
       </div>
 
       <div class="t-block">
-        <div class="t-trigger">▶ trigger:email  subject="Your account was found in a data breach" · confidence=0.97</div>
-        <div class="t-muted" style="margin-left:1.5rem;">Extracted → site: linkedin.com · account: you@email.com</div>
+        <div class="t-scan">▶ intel:hibp     polling breachedaccount/you@email.com · interval=1h</div>
+        <div class="t-scan">▶ intel:dehashed  scanning credential databases · 3 sources active</div>
+        <div class="t-scan">▶ intel:web_feed  monitoring darkweb-intel.example.com · headless browser</div>
       </div>
 
       <div class="t-block">
-        <div class="t-decision">▶ decision:match  agent=Password Guardian · queuing execution</div>
+        <div class="t-alert">⚠ breach:detected  source=hibp · name="LinkedIn 2024" · DataClasses=["Passwords","Emails"]</div>
+        <div class="t-muted" style="margin-left:1.5rem;">Account: you@email.com · Breach date: 2024-11-14 · confidence=0.97</div>
+      </div>
+
+      <div class="t-block">
+        <div class="t-decision">▶ decision:match  passwords exposed — rotating credentials · agent=Breach Guardian</div>
       </div>
 
       <div class="t-block">
         <div class="t-action">▶ browser:navigate  https://linkedin.com/login</div>
         <div class="t-action">▶ browser:click     "Forgot password"</div>
         <div class="t-action">▶ browser:type      email=you@email.com</div>
-        <div class="t-action">▶ browser:click     "Send reset email"</div>
+        <div class="t-action">▶ browser:click     "Send reset link"</div>
       </div>
 
       <div class="t-block">
         <div class="t-action">▶ email:search      "LinkedIn password reset" · max_age=5min</div>
-        <div class="t-muted" style="margin-left:1.5rem;">Found → code: 847291</div>
+        <div class="t-muted" style="margin-left:1.5rem;">Found → OTP: 847291</div>
         <div class="t-action">▶ browser:paste_code  selector=#otpInput · code=847291</div>
         <div class="t-action">▶ browser:type      new_password=[[NEW_PASSWORD]]</div>
+        <div class="t-action">▶ vault:save        site=linkedin.com · encrypted ✓</div>
       </div>
 
-      <div class="t-block">
-        <div class="t-action">▶ vault:save  site=linkedin.com · encrypted ✓</div>
-      </div>
-
-      <div class="t-success">✓ agent:done  outcome=success</div>
-      <div class="t-success">✓ notify:slack  "#security-alerts — LinkedIn password rotated successfully"</div>
+      <div class="t-success">✓ agent:done     outcome=success · elapsed=47s</div>
+      <div class="t-success">✓ notify:slack   "#security-alerts — LinkedIn password rotated. Breach response complete."</div>
 
     </div>
   </div>
 </div>
 
-<!-- Trigger sources -->
-<section class="section" id="triggers">
-  <div class="section-label">Trigger Layer</div>
-  <h2>Every signal source, unified</h2>
+<!-- Intel sources -->
+<section class="section" id="intel">
+  <div class="section-label">Breach Intelligence</div>
+  <h2>It already knows where to look</h2>
   <p class="section-intro">
-    Event sources fire instantly. Poll sources check on your schedule.
-    Claude evaluates every signal against your plain English rule — no hardcoded logic.
+    ID-Bot monitors the sources that matter — breach databases, leaked credential indexes,
+    and dark web feeds — continuously, without any configuration from you.
   </p>
-  <div class="sources-grid">
-    <div class="source-card">
-      <div class="source-icon">📧</div>
-      <h3>Email Inbox</h3>
-      <p>Monitor any IMAP inbox. Claude reads incoming messages and decides if your trigger condition is met.</p>
-      <span class="source-badge badge-poll">Poll</span>
+  <div class="intel-grid">
+    <div class="intel-card">
+      <div class="intel-icon">🔍</div>
+      <h3>HaveIBeenPwned</h3>
+      <p>Monitors your accounts against the HIBP v3 API. Checks both personal account breaches and the latest public breach disclosures.</p>
+      <span class="intel-badge badge-poll">Hourly poll</span>
     </div>
-    <div class="source-card">
-      <div class="source-icon">🪝</div>
-      <h3>Webhooks</h3>
-      <p>Receive push events from any service — HMAC-verified, routed instantly to the right agent.</p>
-      <span class="source-badge badge-push">Push</span>
+    <div class="intel-card">
+      <div class="intel-icon">🕳️</div>
+      <h3>DeHashed</h3>
+      <p>Scans leaked credential databases for your email addresses, usernames, or domains. Catches breaches not yet in public indexes.</p>
+      <span class="intel-badge badge-poll">Hourly poll</span>
     </div>
-    <div class="source-card">
-      <div class="source-icon">🔌</div>
-      <h3>Third-Party APIs</h3>
-      <p>Poll any API on your schedule. Claude evaluates the response against your trigger rule.</p>
-      <span class="source-badge badge-poll">Poll</span>
+    <div class="intel-card">
+      <div class="intel-icon">🌐</div>
+      <h3>Dark Web Feeds</h3>
+      <p>Claude reads any dark web intelligence feed or breach disclosure page via headless browser. No scraping scripts needed.</p>
+      <span class="intel-badge badge-poll">Configurable</span>
     </div>
-    <div class="source-card">
-      <div class="source-icon">🌐</div>
-      <h3>Web Page Monitor</h3>
-      <p>Claude visits a URL and reads the page — no scraping scripts, no brittle selectors.</p>
-      <span class="source-badge badge-poll">Poll</span>
+    <div class="intel-card">
+      <div class="intel-icon">📡</div>
+      <h3>Breach RSS / Blogs</h3>
+      <p>Monitor security disclosure blogs, threat intel feeds, or vendor breach notification pages. Claude decides what's actionable.</p>
+      <span class="intel-badge badge-poll">Configurable</span>
     </div>
-    <div class="source-card">
-      <div class="source-icon">🗓️</div>
-      <h3>Schedule</h3>
-      <p>Fire on any cron schedule — daily reports, weekly cleanups, recurring workflows.</p>
-      <span class="source-badge badge-push">Cron</span>
+    <div class="intel-card">
+      <div class="intel-icon">🪝</div>
+      <h3>Webhook Push</h3>
+      <p>Plug in any external breach notification service via HMAC-verified webhook. ID-Bot responds in seconds, not hours.</p>
+      <span class="intel-badge badge-push">Push</span>
     </div>
-    <div class="source-card">
-      <div class="source-icon">✏️</div>
-      <h3>Client-Defined</h3>
-      <p>Your clients define their own trigger rules in plain English via the dashboard.</p>
-      <span class="source-badge badge-push">Custom</span>
+    <div class="intel-card">
+      <div class="intel-icon">📧</div>
+      <h3>Breach Alert Emails</h3>
+      <p>Still want to catch vendor emails? ID-Bot monitors your inbox too — Claude evaluates every message against your trigger rule.</p>
+      <span class="intel-badge badge-poll">IMAP poll</span>
     </div>
   </div>
 </section>
@@ -380,38 +386,40 @@
 <!-- Use cases -->
 <section class="section">
   <div class="section-label">Use Cases</div>
-  <h2>Built for any client workflow</h2>
-  <p class="section-intro">Any task that involves watching for a signal and acting on it in a browser.</p>
+  <h2>Acts before you even notice</h2>
+  <p class="section-intro">
+    ID-Bot's breach intelligence can drive any autonomous response workflow in a real browser.
+  </p>
   <div class="clients-grid">
     <div class="client-card">
-      <div class="client-tag">Security</div>
-      <h3>Breach response</h3>
-      <p>Detect a breach notification → rotate password on affected site → save to vault → notify team.</p>
+      <div class="client-tag">Security teams</div>
+      <h3>Credential rotation at scale</h3>
+      <p>Monitor all company accounts across every breach database. Rotate en masse the moment exposure is detected.</p>
     </div>
     <div class="client-card">
-      <div class="client-tag">Finance</div>
-      <h3>Invoice processing</h3>
-      <p>Email arrives with invoice → extract details → log into vendor portal → submit payment → confirm.</p>
+      <div class="client-tag">Personal security</div>
+      <h3>Always-on account guardian</h3>
+      <p>Set it once. ID-Bot watches every breach database and rotates passwords on affected sites automatically.</p>
     </div>
     <div class="client-card">
-      <div class="client-tag">Operations</div>
-      <h3>Compliance monitoring</h3>
-      <p>Watch a regulatory page for updates → extract changes → file report → notify compliance team.</p>
+      <div class="client-tag">Enterprise</div>
+      <h3>Domain-wide breach monitoring</h3>
+      <p>Watch for any new public breach that mentions your domain. Trigger response workflows before employees are notified.</p>
     </div>
     <div class="client-card">
-      <div class="client-tag">HR</div>
-      <h3>Onboarding automation</h3>
-      <p>New hire webhook fires → provision accounts across multiple portals → send welcome email.</p>
+      <div class="client-tag">Fintech / Healthcare</div>
+      <h3>Compliance-driven response</h3>
+      <p>Automate the breach response playbook: detect → rotate → log → notify compliance team — all within minutes.</p>
     </div>
     <div class="client-card">
-      <div class="client-tag">Sales</div>
-      <h3>Lead qualification</h3>
-      <p>Form submission → research company on web → enrich CRM record → route to right rep.</p>
+      <div class="client-tag">MSPs</div>
+      <h3>Client protection at scale</h3>
+      <p>One ID-Bot deployment monitors dozens of client accounts and domains. Separate vaults and notifications per client.</p>
     </div>
     <div class="client-card">
-      <div class="client-tag">Any vertical</div>
-      <h3>Your use case</h3>
-      <p>Define any trigger + any browser action in plain English. ID-Bot handles the execution.</p>
+      <div class="client-tag">Any workflow</div>
+      <h3>Beyond credential rotation</h3>
+      <p>ID-Bot's trigger layer is general. Add any browser-based response: file a report, provision a service, notify a team.</p>
     </div>
   </div>
 </section>
@@ -437,7 +445,7 @@
     </div>
     <div class="tier-card featured">
       <div class="tier-name">Hybrid</div>
-      <div class="tier-desc">Cloud brain + local execution. Data never leaves the client's machine.</div>
+      <div class="tier-desc">Cloud intelligence + local execution. Data never leaves the client's machine.</div>
       <ul class="tier-features">
         <li>Your backend does the reasoning</li>
         <li>Chrome extension runs on client's machine</li>
@@ -453,8 +461,8 @@
         <li>Docker Compose — one command to start</li>
         <li>Client brings their own Anthropic key</li>
         <li>Full data isolation</li>
-        <li>Dedicated instance per client</li>
         <li>Air-gap compatible</li>
+        <li>Bring your own breach intel API keys</li>
       </ul>
     </div>
   </div>
@@ -465,39 +473,37 @@
 <!-- Config example -->
 <section class="section" id="config">
   <div class="section-label">Configuration</div>
-  <h2>Plain English. No code.</h2>
+  <h2>One config. ID-Bot handles the rest.</h2>
   <p class="section-intro">
-    Clients define agents in natural language — or via the dashboard UI.
-    Both produce the same config. Claude interprets the rest.
+    Point ID-Bot at your accounts and domains. It finds the breaches, evaluates the risk, and acts — no triggers to define.
   </p>
   <div class="config-wrap">
     <pre><span class="c-section">{</span>
-  <span class="c-key">"name"</span>: <span class="c-str">"Password Guardian"</span>,
+  <span class="c-key">"name"</span>: <span class="c-str">"Breach Guardian"</span>,
 
-  <span class="c-comment">// What to watch for — any combination of sources</span>
+  <span class="c-comment">// ID-Bot monitors breach databases autonomously — no trigger to define</span>
   <span class="c-key">"triggers"</span>: [
     {
-      <span class="c-key">"type"</span>: <span class="c-str">"email"</span>,
-      <span class="c-key">"match_rule"</span>: <span class="c-str">"subject contains breach, compromised, or unauthorized access"</span>
-    },
-    {
-      <span class="c-key">"type"</span>: <span class="c-str">"api"</span>,
-      <span class="c-key">"url"</span>: <span class="c-str">"https://haveibeenpwned.com/api/v3/breachedaccount/you@email.com"</span>,
-      <span class="c-key">"match_rule"</span>: <span class="c-str">"new breach in the last 24 hours"</span>,
+      <span class="c-key">"type"</span>: <span class="c-str">"breach_intel"</span>,
+      <span class="c-key">"monitored_accounts"</span>: [<span class="c-str">"you@email.com"</span>, <span class="c-str">"work@company.com"</span>],
+      <span class="c-key">"monitored_domains"</span>: [<span class="c-str">"company.com"</span>],
+      <span class="c-key">"monitor_latest_breaches"</span>: <span class="c-val">true</span>,
+      <span class="c-key">"only_new_breaches"</span>: <span class="c-val">true</span>,
+      <span class="c-key">"match_rule"</span>: <span class="c-str">"rotate credentials if passwords or auth tokens were exposed"</span>,
       <span class="c-key">"poll_interval_seconds"</span>: <span class="c-val">3600</span>
     }
   ],
 
-  <span class="c-comment">// What to do — plain English, Claude figures out the steps</span>
+  <span class="c-comment">// What to do when a breach is found</span>
   <span class="c-key">"action"</span>: {
     <span class="c-key">"goal"</span>: <span class="c-str">"Rotate the password on the affected site and save to vault"</span>
   },
 
-  <span class="c-comment">// Where to run it</span>
+  <span class="c-comment">// How to run it</span>
   <span class="c-key">"runtime_mode"</span>: <span class="c-str">"hybrid"</span>,
   <span class="c-key">"browser_mode"</span>: <span class="c-str">"visible"</span>,
 
-  <span class="c-comment">// How to notify</span>
+  <span class="c-comment">// Where to send the report</span>
   <span class="c-key">"notifications"</span>: [
     { <span class="c-key">"channel"</span>: <span class="c-str">"slack"</span>, <span class="c-key">"destination"</span>: <span class="c-str">"#security-alerts"</span> }
   ]
@@ -509,7 +515,7 @@
 <section class="cta-section">
   <div class="cta-glow"></div>
   <div class="section-label" style="justify-content: center; display: flex;">Early Access</div>
-  <h2>Ready to automate your first workflow?</h2>
+  <h2>Your credentials are being monitored.<br>Is ID-Bot watching?</h2>
   <p>ID-Bot is in early access. Request access to get set up with the right deployment tier for your use case.</p>
   <a class="btn btn-primary" style="font-size: 1rem; padding: 0.9rem 2rem;" href="mailto:email2navada@gmail.com?subject=Access%20request%3A%20ID-Bot&body=Hi%20Guru%2C%0A%0AI%27d%20like%20access%20to%20ID-Bot.%0A%0AName%3A%0AOrg%2FContext%3A%0AUse%20case%3A%0APreferred%20deployment%3A%20cloud%20%2F%20hybrid%20%2F%20self-hosted%0A">
     Request Access →
