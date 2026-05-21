@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Articles — Guru Navada</title>
+  <meta name="description" content="Writing by Guru Navada on fintech, fraud, connected accounts, and the future of AI — published on Medium." />
+  <style>
+    :root { --bg: #0f1117; --surface: #1a1d27; --border: #2a2d3e; --accent: #7c6cf8; --text: #e2e8f0; --muted: #94a3b8; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* Nav — identical to index */
+    nav { border-bottom: 1px solid var(--border); padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; background: rgba(15,17,23,0.95); backdrop-filter: blur(12px); }
+    .nav-logo { font-weight: 700; font-size: 1rem; letter-spacing: -0.02em; color: var(--text); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-center { display: flex; gap: 0.25rem; }
+    .nav-tab { color: var(--muted); font-size: 0.875rem; text-decoration: none; padding: 0.35rem 0.875rem; border-radius: 6px; font-weight: 500; transition: color 0.15s, background 0.15s; }
+    .nav-tab:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .nav-tab.active { color: var(--text); background: rgba(124,108,248,0.12); }
+    .nav-right a { color: var(--muted); font-size: 0.875rem; text-decoration: none; }
+    .nav-right a:hover { color: var(--text); }
+
+    main { flex: 1; max-width: 760px; margin: 0 auto; padding: 4rem 2rem; width: 100%; }
+    .intro { margin-bottom: 3rem; }
+    .intro h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; letter-spacing: -0.04em; margin-bottom: 0.75rem; }
+    .intro h1 span { color: var(--accent); }
+    .intro p { color: var(--muted); font-size: 1.0625rem; line-height: 1.6; }
+
+    /* Filter tabs */
+    .filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .filter-btn { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.3rem 0.75rem; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; transition: all 0.15s; }
+    .filter-btn:hover { color: var(--text); border-color: var(--accent); }
+    .filter-btn.active { color: var(--accent); border-color: var(--accent); background: rgba(124,108,248,0.1); }
+
+    /* Article grid */
+    .articles { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
+
+    .article-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: border-color 0.15s, transform 0.15s; }
+    .article-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+    .article-category { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; display: inline-block; padding: 0.2rem 0.55rem; border-radius: 4px; }
+    .cat-fraud      { color: #f87171; background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.2); }
+    .cat-payments   { color: #34d399; background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); }
+    .cat-ai         { color: #7c6cf8; background: rgba(124,108,248,0.1); border: 1px solid rgba(124,108,248,0.2); }
+
+    .article-card h2 { font-size: 0.9875rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.35; margin-bottom: 0.6rem; }
+    .article-card p  { color: var(--muted); font-size: 0.8125rem; line-height: 1.55; flex: 1; margin-bottom: 1.25rem; }
+
+    .article-footer { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+    .article-meta   { font-size: 0.75rem; color: var(--muted); }
+    .read-link      { font-size: 0.75rem; font-weight: 600; color: var(--accent); display: flex; align-items: center; gap: 0.25rem; white-space: nowrap; }
+    .article-card:hover .read-link { text-decoration: underline; }
+
+    /* Hidden state for filter */
+    .article-card.hidden { display: none; }
+
+    .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 2rem; text-align: center; font-size: 0.8rem; color: var(--muted); }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">guru<span>navada</span></a>
+  <div class="nav-center">
+    <a class="nav-tab" href="/">Projects</a>
+    <a class="nav-tab active" href="/articles/">Articles</a>
+  </div>
+  <div class="nav-right"><a href="https://github.com/gnavada">GitHub →</a></div>
+</nav>
+
+<main>
+  <div class="intro">
+    <h1>Writing by <span>Guru Navada</span></h1>
+    <p>Essays on fintech, fraud, connected accounts, and the future of AI — published on Medium.</p>
+  </div>
+
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="fraud">Fraud</button>
+    <button class="filter-btn" data-filter="payments">Connected Accounts &amp; Payments</button>
+    <button class="filter-btn" data-filter="ai">AI &amp; AI Agents</button>
+  </div>
+
+  <div class="articles">
+
+    <!-- ── Fraud ── -->
+    <a class="article-card" data-category="fraud"
+       href="https://medium.com/@gurunavada/first-party-fraud-isnt-a-payments-problem-f3ec945c661a"
+       target="_blank" rel="noopener">
+      <span class="article-category cat-fraud">Fraud</span>
+      <h2>First-Party Fraud Isn't a Payments Problem</h2>
+      <p>Why consortium intelligence needs better product thinking — and how the industry is solving for the wrong layer of the stack.</p>
+      <div class="article-footer">
+        <span class="article-meta">Jan 2026 · 4 min read</span>
+        <span class="read-link">Read on Medium ↗</span>
+      </div>
+    </a>
+
+    <!-- ── Payments ── -->
+    <a class="article-card" data-category="payments"
+       href="https://medium.com/@gurunavada/payments-dont-fail-because-they-re-hard-9d3ea3a441b2"
+       target="_blank" rel="noopener">
+      <span class="article-category cat-payments">Connected Accounts &amp; Payments</span>
+      <h2>Payments Don't Fail Because They're Hard</h2>
+      <p>Payments work best when they're attached at the moment work is completed — not before, not after. Why timing is the real failure mode.</p>
+      <div class="article-footer">
+        <span class="article-meta">Jan 2026 · 4 min read</span>
+        <span class="read-link">Read on Medium ↗</span>
+      </div>
+    </a>
+
+    <a class="article-card" data-category="payments"
+       href="https://medium.com/@gurunavada/the-most-important-financial-platform-you-dont-see-ce3644db35be"
+       target="_blank" rel="noopener">
+      <span class="article-category cat-payments">Connected Accounts &amp; Payments</span>
+      <h2>The Most Important Financial Platform You Don't See</h2>
+      <p>Why connected accounts quietly determine whether financial products scale — and why most product teams don't build for it.</p>
+      <div class="article-footer">
+        <span class="article-meta">Jan 2026 · 3 min read</span>
+        <span class="read-link">Read on Medium ↗</span>
+      </div>
+    </a>
+
+    <!-- ── AI ── -->
+    <a class="article-card" data-category="ai"
+       href="https://medium.com/@gurunavada/ai-is-not-a-game-changer-its-becoming-part-of-life-c12e3011e3fe"
+       target="_blank" rel="noopener">
+      <span class="article-category cat-ai">AI &amp; AI Agents</span>
+      <h2>AI Is Not a Game Changer. It's Becoming Part of Life.</h2>
+      <p>Reframing AI as shared infrastructure — like highways — not a transformative force. How standardization via protocols like MCP will define the next phase.</p>
+      <div class="article-footer">
+        <span class="article-meta">Feb 2026 · 3 min read</span>
+        <span class="read-link">Read on Medium ↗</span>
+      </div>
+    </a>
+
+    <a class="article-card" data-category="ai"
+       href="https://medium.com/@gurunavada/the-clone-economy-when-your-ai-works-three-jobs-while-you-sleep-b010fa504049"
+       target="_blank" rel="noopener">
+      <span class="article-category cat-ai">AI &amp; AI Agents</span>
+      <h2>The Clone Economy: When Your AI Works Three Jobs While You Sleep</h2>
+      <p>What happens when individuals can deploy personalized AI in fractional roles simultaneously — and what that means for the economics of specialized work.</p>
+      <div class="article-footer">
+        <span class="article-meta">Feb 2026 · 5 min read</span>
+        <span class="read-link">Read on Medium ↗</span>
+      </div>
+    </a>
+
+    <a class="article-card" data-category="ai"
+       href="https://medium.com/@gurunavada/the-recommendation-engine-is-lying-to-you-517c5071ab59"
+       target="_blank" rel="noopener">
+      <span class="article-category cat-ai">AI &amp; AI Agents</span>
+      <h2>The Recommendation Engine Is Lying to You</h2>
+      <p>Personalization systems optimize for engagement over genuine user intent. A trust-based framework grounded in real user needs and life events — not signal capture.</p>
+      <div class="article-footer">
+        <span class="article-meta">May 2026 · 6 min read</span>
+        <span class="read-link">Read on Medium ↗</span>
+      </div>
+    </a>
+
+    <a class="article-card" data-category="ai"
+       href="https://medium.com/@gurunavada/most-ai-agents-do-not-have-a-trust-problem-they-have-a-trust-architecture-problem-04eacf9fe809"
+       target="_blank" rel="noopener">
+      <span class="article-category cat-ai">AI &amp; AI Agents</span>
+      <h2>Most AI Agents Don't Have a Trust Problem — They Have a Trust Architecture Problem</h2>
+      <p>AI agents fail to build trust progressively. A framework for deepening user relationships over time — not asking for it all in the first thirty seconds.</p>
+      <div class="article-footer">
+        <span class="article-meta">May 2026 · 4 min read</span>
+        <span class="read-link">Read on Medium ↗</span>
+      </div>
+    </a>
+
+  </div>
+</main>
+
+<footer>
+  <p><a href="https://medium.com/@gurunavada">medium.com/@gurunavada</a> · <a href="https://github.com/gnavada">github.com/gnavada</a></p>
+</footer>
+
+<script>
+  const btns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.article-card');
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        if (filter === 'all' || card.dataset.category === filter) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
