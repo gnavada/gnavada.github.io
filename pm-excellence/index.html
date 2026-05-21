@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PM Excellence — The PM Operating System for Claude</title>
+  <meta name="description" content="A complete PM operating system for Claude — decision frameworks, metrics architecture, stakeholder navigation, and a personal calibration layer that makes every output specific to your role." />
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --border: #2a2d3e;
+      --accent: #7c6cf8;
+      --accent-soft: #3d3770;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --code-bg: #0d1117;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(15,17,23,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .nav-logo { font-weight: 700; font-size: 1rem; color: var(--text); letter-spacing: -0.02em; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 1.5rem; font-size: 0.875rem; }
+    .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .nav-cta { background: var(--accent); color: #fff; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.875rem; font-weight: 600; }
+    .nav-cta:hover { background: #6a5ce6; text-decoration: none; }
+
+    .hero { text-align: center; padding: 6rem 2rem 4rem; max-width: 800px; margin: 0 auto; }
+    .badge { display: inline-block; background: var(--accent-soft); color: var(--accent); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.25rem 0.75rem; border-radius: 999px; margin-bottom: 1.5rem; border: 1px solid var(--accent); }
+    h1 { font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 1.25rem; }
+    h1 .highlight { color: var(--accent); }
+    .hero p { font-size: 1.125rem; color: var(--muted); max-width: 580px; margin: 0 auto 2.5rem; }
+    .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9375rem; cursor: pointer; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #6a5ce6; text-decoration: none; }
+    .btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--border); text-decoration: none; }
+
+    .demo { margin: 4rem auto; max-width: 780px; padding: 0 2rem; }
+    .terminal { background: var(--code-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .terminal-bar { background: var(--surface); padding: 0.75rem 1rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--border); }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-r { background: #ef4444; }
+    .dot-y { background: #f59e0b; }
+    .dot-g { background: var(--green); }
+    .terminal-label { margin-left: 0.5rem; font-size: 0.75rem; color: var(--muted); font-family: monospace; }
+    .terminal-body { padding: 1.5rem; font-family: "JetBrains Mono", "Fira Code", monospace; font-size: 0.8125rem; line-height: 1.7; }
+    .t-prompt { color: var(--green); }
+    .t-skill { color: var(--accent); }
+    .t-result { color: #94a3b8; }
+    .t-finding { color: #fbbf24; font-weight: 600; }
+    .t-key { color: #34d399; }
+
+    .section { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
+    .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+    h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 1rem; }
+    .section > p { color: var(--muted); margin-bottom: 2.5rem; max-width: 600px; }
+
+    .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 3rem; }
+    .info-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; }
+    .info-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .info-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.55; }
+    .info-card .card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+
+    .table-wrap { overflow-x: auto; margin-bottom: 2rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    th { text-align: left; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 0.5rem 1rem; border-bottom: 1px solid var(--border); }
+    td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+    td:first-child { font-weight: 600; white-space: nowrap; }
+    td:last-child { color: var(--muted); }
+    tr:last-child td { border-bottom: none; }
+
+    .arch { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin: 2rem 0 3rem; font-size: 0.875rem; }
+    .arch-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1.25rem; text-align: center; min-width: 140px; }
+    .arch-box strong { display: block; font-size: 0.9375rem; margin-bottom: 0.25rem; }
+    .arch-box span { color: var(--muted); font-size: 0.75rem; }
+    .arch-arrow { color: var(--muted); font-size: 1.25rem; }
+
+    .prompts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
+    .prompt-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; transition: border-color 0.15s; }
+    .prompt-card:hover { border-color: var(--accent); }
+    .prompt-card .tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.5rem; }
+    .prompt-card p { font-size: 0.875rem; color: var(--text); font-style: italic; }
+
+    .cta-section { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 3rem 2rem; text-align: center; max-width: 600px; margin: 0 auto; }
+    .cta-section h2 { margin-bottom: 0.75rem; }
+    .cta-section p { color: var(--muted); margin-bottom: 2rem; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.8125rem; color: var(--muted); }
+    footer a { color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">pm<span>-excellence</span></div>
+  <div class="nav-links">
+    <a href="#what">What's inside</a>
+    <a href="#how">How it works</a>
+    <a href="#prompts">Prompts</a>
+  </div>
+  <a class="nav-cta btn-primary" style="padding:0.4rem 1rem; border-radius:6px; font-size:0.875rem; font-weight:600;" href="mailto:email2navada@gmail.com?subject=Access%20request%3A%20pm-excellence&body=Hi%20Guru%2C%0A%0AI%27d%20like%20access%20to%20pm-excellence.%0A%0AName%3A%0ARole%2FContext%3A%0A">Request Access</a>
+</nav>
+
+<section class="hero">
+  <div class="badge">Claude Skill · PM Framework · Personal Calibration</div>
+  <h1>The PM operating system<br /><span class="highlight">built for Claude</span></h1>
+  <p>Not another PM advice doc. A complete operating system — decision frameworks, metrics architecture, stakeholder navigation, and a personal calibration layer that makes every Claude output specific to your role and thinking style.</p>
+  <div class="hero-ctas">
+    <a class="btn btn-primary" href="mailto:email2navada@gmail.com?subject=Access%20request%3A%20pm-excellence&body=Hi%20Guru%2C%0A%0AI%27d%20like%20access%20to%20pm-excellence.%0A%0AName%3A%0ARole%2FContext%3A%0A">Request Access</a>
+    <a class="btn btn-secondary" href="#how">How It Works</a>
+  </div>
+</section>
+
+<div class="demo">
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="dot dot-r"></div>
+      <div class="dot dot-y"></div>
+      <div class="dot dot-g"></div>
+      <span class="terminal-label">Claude Desktop — pm-excellence</span>
+    </div>
+    <div class="terminal-body">
+      <div class="t-prompt">You → </div>
+      <div style="margin-left:2rem; color:#e2e8f0; margin-bottom:1rem;">"Load pm-excellence. I need to align my VP on a 6-month roadmap reprioritization."</div>
+
+      <div class="t-skill">▶ pm-excellence skill loaded</div>
+      <div class="t-skill" style="margin-bottom:1rem;">▶ personal context calibrated · role: senior PM · audience: VP Engineering</div>
+
+      <div class="t-finding">⚡ Situation read</div>
+      <div style="margin-left:2rem; color:#e2e8f0; margin-bottom:0.75rem;">
+        <strong>Reprioritization aligned to your VP's decision style — data-first, risk-aware.</strong><br/>
+        Framework: lead with business impact, not feature list. Anchor to OKR gaps, not team preferences.<br/>
+        Address trade-off fears upfront — don't wait for them to raise it.
+      </div>
+
+      <div class="t-key">🔑 Altitude: VP layer (consequence-first, 2-min read)</div>
+      <div style="margin-left:2rem; color:#e2e8f0; margin-bottom:0.75rem;">
+        Opening: "Here's why Q3 bets need to shift, and what we'd be leaving on the table if we don't."<br/>
+        Structure: context (1 line) → the ask → top 2 trade-offs → your recommendation
+      </div>
+
+      <div class="t-result">➡️ Next: draft the alignment doc · rehearse pushback · run the send checklist</div>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="what">
+  <div class="section-label">What's inside</div>
+  <h2>Two files. One operating system.</h2>
+  <p>pm-excellence is split into a universal skill and a personal calibration layer. The skill is world-class PM thinking. The personal layer makes it yours.</p>
+
+  <div class="two-col">
+    <div class="info-card">
+      <div class="card-icon">🧠</div>
+      <h3>pm-excellence skill</h3>
+      <p>The universal PM operating system — frameworks for decision-making, metrics architecture, stakeholder navigation, roadmap strategy, and research synthesis. Works for any PM at any company.</p>
+    </div>
+    <div class="info-card">
+      <div class="card-icon">🎯</div>
+      <h3>pm-excellence-personal</h3>
+      <p>Your personal calibration layer — who you are, how you think, your current focus, your career trajectory, and your personal definition of a great week. Makes every Claude output specific to you.</p>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Section</th>
+          <th>What it covers</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Decision Frameworks</td><td>RICE, ICE, opportunity sizing, reversibility filters — when to use which</td></tr>
+        <tr><td>Metrics Architecture</td><td>North star selection, leading vs lagging indicators, metric decomposition trees</td></tr>
+        <tr><td>Stakeholder Navigation</td><td>Exec alignment, cross-functional influence, managing up with data</td></tr>
+        <tr><td>Roadmap Strategy</td><td>Now/Next/Later tradeoffs, sequencing for learning, handling reprioritization</td></tr>
+        <tr><td>Research Synthesis</td><td>Turning user signals into product bets, qual to quant translation</td></tr>
+        <tr><td>Who I Am</td><td>Current role, industry, company stage, primary audiences</td></tr>
+        <tr><td>How I Think</td><td>Thinking style, go-to frameworks, leadership posture, AI fluency</td></tr>
+        <tr><td>Where I'm Headed</td><td>Entrepreneurial goal, current learning edge</td></tr>
+        <tr><td>Current Focus Areas</td><td>Active priorities — updated quarterly</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="section-label">How it works</div>
+  <h2>Load it. Then just talk.</h2>
+  <p>pm-excellence loads into Claude as a skill. Once loaded, every response is calibrated to PM-level thinking and your personal context — no need to re-explain your role or situation.</p>
+
+  <div class="arch">
+    <div class="arch-box">
+      <strong>You</strong>
+      <span>"Load pm-excellence"</span>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box" style="border-color: var(--accent);">
+      <strong>Claude Desktop</strong>
+      <span>SKILL.md + personal.md</span>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box">
+      <strong>Every response</strong>
+      <span>calibrated to you</span>
+    </div>
+  </div>
+
+  <p style="margin-bottom: 1rem;"><strong>One invoke. Calibrated for the rest of the session.</strong></p>
+  <p>"Load pm-excellence. I'm working on [initiative/problem]." — Claude loads both files and every output from that point uses PM-excellence frameworks, calibrated to your role, audience, and current priorities.</p>
+</section>
+
+<section class="section" id="prompts">
+  <div class="section-label">Ready-to-use invocations</div>
+  <h2>First things to try</h2>
+  <p>Once you have access, use any of these to invoke pm-excellence in Claude Desktop.</p>
+
+  <div class="prompts-grid">
+    <div class="prompt-card"><div class="tag">Alignment</div><p>"Load pm-excellence. I need to align my VP on a 6-month roadmap reprioritization."</p></div>
+    <div class="prompt-card"><div class="tag">Prioritization</div><p>"Load pm-excellence. Help me pressure-test my Q3 priorities against our north star."</p></div>
+    <div class="prompt-card"><div class="tag">Decision</div><p>"Load pm-excellence. I'm deciding between building feature X or doubling down on Y — walk me through the framework."</p></div>
+    <div class="prompt-card"><div class="tag">Research</div><p>"Load pm-excellence. Help me synthesize 3 weeks of user interviews into product bets."</p></div>
+    <div class="prompt-card"><div class="tag">Stakeholders</div><p>"Load pm-excellence. I have a difficult conversation with Eng leadership about a slip — help me prepare."</p></div>
+    <div class="prompt-card"><div class="tag">Reflection</div><p>"Run my pm-excellence weekly reflection."</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="cta-section">
+    <h2>Get access</h2>
+    <p>pm-excellence is a private skill. Request access and I'll share it with you directly.</p>
+    <div class="cta-btns">
+      <a class="btn btn-primary" href="mailto:email2navada@gmail.com?subject=Access%20request%3A%20pm-excellence&body=Hi%20Guru%2C%0A%0AI%27d%20like%20access%20to%20pm-excellence.%0A%0AName%3A%0ARole%2FContext%3A%0A">Request Access</a>
+      <a class="btn btn-secondary" href="#how">How It Works</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>pm-excellence · Built for Claude Desktop · <a href="https://gnavada.github.io">← All projects</a></p>
+</footer>
+
+</body>
+</html>
