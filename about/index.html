@@ -43,12 +43,16 @@
 
     /* Timeline */
     .timeline-section { margin-bottom: 3.5rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
-    .timeline { display: grid; gap: 0; }
-    .timeline-item { display: flex; gap: 1.25rem; padding: 0.875rem 0; border-bottom: 1px solid var(--border); align-items: baseline; }
-    .timeline-item:last-child { border-bottom: none; }
-    .timeline-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 0.45rem; }
-    .timeline-text { font-size: 0.875rem; color: var(--text); line-height: 1.5; }
-    .timeline-text span { color: var(--muted); font-size: 0.8125rem; }
+    .timeline { display: grid; gap: 1rem; }
+    .timeline-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; }
+    .timeline-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.25rem; }
+    .timeline-card-company { font-size: 0.9375rem; font-weight: 700; letter-spacing: -0.02em; }
+    .timeline-card-period { font-size: 0.75rem; color: var(--muted); white-space: nowrap; flex-shrink: 0; margin-top: 0.15rem; }
+    .timeline-card-role { font-size: 0.75rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.625rem; }
+    .timeline-card-desc { color: var(--muted); font-size: 0.8375rem; line-height: 1.6; margin-bottom: 0.75rem; }
+    .timeline-card-highlights { display: flex; flex-direction: column; gap: 0.3rem; }
+    .timeline-highlight { font-size: 0.8125rem; color: var(--text); display: flex; gap: 0.5rem; }
+    .timeline-highlight::before { content: "→"; color: var(--accent); flex-shrink: 0; }
 
     /* Contact */
     .contact-section { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 1.75rem 2rem; }
@@ -104,24 +108,58 @@
   </div>
 
   <div class="timeline-section">
-    <div class="section-label">Career arc</div>
+    <div class="section-label">Experience</div>
     <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-text">Intuit Credit Karma — Staff PM, Identity &amp; Connected Accounts <span>(2023–present)</span></div>
+
+      <div class="timeline-card">
+        <div class="timeline-card-top">
+          <div class="timeline-card-company">Intuit Credit Karma</div>
+          <div class="timeline-card-period">Aug 2023 – Present</div>
+        </div>
+        <div class="timeline-card-role">Staff Product Manager</div>
+        <div class="timeline-card-desc">Three roles across Identity, Connected Accounts, and Fraud — each touching a different layer of the trust and data stack for hundreds of millions of users.</div>
+        <div class="timeline-card-highlights">
+          <div class="timeline-highlight">Identity: Owning login, registration, and onboarding strategy — targeting conversion parity across web and mobile, and opening onboarding to credit-invisible users historically excluded by thin-file limitations.</div>
+          <div class="timeline-highlight">Connected Accounts Platform: Set platform KPIs across activation, data quality, and connection health — driving 2x activation growth, 25pp lift in data access, and 13pp improvement in connection health.</div>
+          <div class="timeline-highlight">Fraud &amp; Trust: Led turnaround of Account Takeover losses at peak — 80% reduction in 75 days. Established standardized fraud loss measurement frameworks company-wide.</div>
+        </div>
       </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-text">Varo Bank — Product Leader, Fraud / Risk / Identity <span>(2022–2023)</span></div>
+
+      <div class="timeline-card">
+        <div class="timeline-card-top">
+          <div class="timeline-card-company">Varo Bank</div>
+          <div class="timeline-card-period">Apr 2022 – Aug 2023</div>
+        </div>
+        <div class="timeline-card-role">Product Leader, Fraud / Risk / Identity</div>
+        <div class="timeline-card-desc">Owned end-to-end fraud, risk, and identity product strategy for a fast-scaling neobank — building the decisioning infrastructure needed to grow safely.</div>
+        <div class="timeline-card-highlights">
+          <div class="timeline-highlight">Built centralized risk and fraud decisioning platform — reducing go-to-market timelines by 90% and enabling rapid experimentation across fraud, money movement, and identity.</div>
+          <div class="timeline-highlight">40% fraud loss reduction and 70% reduction in check hold duration for remote deposit capture, while increasing approval rates 25% and cutting dispute rates 50%.</div>
+        </div>
       </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-text">Western Union — Senior Manager, Fraud Product <span>(2015–2022)</span></div>
+
+      <div class="timeline-card">
+        <div class="timeline-card-top">
+          <div class="timeline-card-company">Western Union</div>
+          <div class="timeline-card-period">Mar 2015 – Apr 2022</div>
+        </div>
+        <div class="timeline-card-role">Senior Manager, Customer Engagement / Fraud Product</div>
+        <div class="timeline-card-desc">Led global fraud, risk, and KYC product strategy across APAC, Europe, and North America — building the platforms and teams to protect money movement at scale.</div>
+        <div class="timeline-card-highlights">
+          <div class="timeline-highlight">~$50M incremental annual revenue and ~$25M in cost savings through fraud, risk, and KYC product initiatives across three regions.</div>
+          <div class="timeline-highlight">Built and scaled real-time ML-based fraud decisioning across cards, ACH, and online payments — managing regional product teams across three continents.</div>
+        </div>
       </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-text">Altimetrik &amp; Wipro — Financial Services Platforms <span>(2011–2015)</span></div>
+
+      <div class="timeline-card">
+        <div class="timeline-card-top">
+          <div class="timeline-card-company">Altimetrik &amp; Wipro Technologies</div>
+          <div class="timeline-card-period">Jun 2011 – Mar 2015</div>
+        </div>
+        <div class="timeline-card-role">Financial Services &amp; Payments Platforms</div>
+        <div class="timeline-card-desc">Led requirements and solution design for banking, payments, and financial services platforms across global enterprise clients.</div>
       </div>
+
     </div>
   </div>
 
