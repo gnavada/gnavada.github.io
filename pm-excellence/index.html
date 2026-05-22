@@ -24,8 +24,9 @@
     a:hover { text-decoration: underline; }
 
     nav { position: sticky; top: 0; z-index: 100; background: rgba(15,17,23,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
-    .nav-logo { font-weight: 700; font-size: 1rem; color: var(--text); letter-spacing: -0.02em; }
-    .nav-logo span { color: var(--accent); }
+    .nav-logo { font-weight: 800; font-size: 1rem; letter-spacing: -0.02em; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+    .nav-logo-mark { width: 30px; height: 30px; border-radius: 8px; background: var(--accent); color: #fff; font-size: 0.75rem; font-weight: 800; letter-spacing: -0.01em; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .nav-logo-name { color: var(--muted); font-size: 0.8125rem; font-weight: 500; }
     .nav-links { display: flex; gap: 1.5rem; font-size: 0.875rem; }
     .nav-links a { color: var(--muted); }
     .nav-links a:hover { color: var(--text); text-decoration: none; }
@@ -97,15 +98,13 @@
 
     footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.8125rem; color: var(--muted); }
     footer a { color: var(--muted); }
-    a.nav-logo { text-decoration: none; color: inherit; }
   </style>
 </head>
 <body>
 
 <nav>
-  <a href="/" class="nav-logo">pm<span>-excellence</span></a>
+  <a class="nav-logo" href="/"><span class="nav-logo-mark">GN</span><span class="nav-logo-name">Guru Navada</span></a>
   <div class="nav-links">
-    <a href="/">← All Projects</a>
     <a href="#what">What's inside</a>
     <a href="#how">How it works</a>
     <a href="#prompts">Prompts</a>
