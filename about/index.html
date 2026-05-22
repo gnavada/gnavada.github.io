@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Guru Navada</title>
+  <meta name="description" content="Guru Navada — 15+ years at the intersection of financial services and product. Fraud, risk, identity, connected accounts, and AI." />
+  <style>
+    :root { --bg: #0f1117; --surface: #1a1d27; --border: #2a2d3e; --accent: #7c6cf8; --text: #e2e8f0; --muted: #94a3b8; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    nav { border-bottom: 1px solid var(--border); padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; background: rgba(15,17,23,0.95); backdrop-filter: blur(12px); }
+    .nav-logo { font-weight: 800; font-size: 1rem; letter-spacing: -0.02em; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+    .nav-logo-mark { width: 30px; height: 30px; border-radius: 8px; background: var(--accent); color: #fff; font-size: 0.75rem; font-weight: 800; letter-spacing: -0.01em; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .nav-logo-name { color: var(--muted); font-size: 0.8125rem; font-weight: 500; }
+    .nav-center { display: flex; gap: 0.25rem; }
+    .nav-tab { color: var(--muted); font-size: 0.875rem; text-decoration: none; padding: 0.35rem 0.875rem; border-radius: 6px; font-weight: 500; transition: color 0.15s, background 0.15s; }
+    .nav-tab:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .nav-tab.active { color: var(--text); background: rgba(124,108,248,0.12); }
+    .nav-right a { color: var(--muted); font-size: 0.875rem; text-decoration: none; }
+    .nav-right a:hover { color: var(--text); }
+
+    main { flex: 1; max-width: 720px; margin: 0 auto; padding: 4rem 2rem; width: 100%; }
+
+    /* Hero */
+    .hero { margin-bottom: 3.5rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
+    .hero-eyebrow { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .hero h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.2; margin-bottom: 1rem; }
+    .hero h1 span { color: var(--accent); }
+    .hero p { color: var(--muted); font-size: 1.0625rem; line-height: 1.65; max-width: 560px; }
+
+    /* Section label */
+    .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.875rem; }
+
+    /* What I do cards */
+    .what-section { margin-bottom: 3.5rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
+    .cards { display: grid; gap: 0.875rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; }
+    .card-domain { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+    .card h2 { font-size: 0.9375rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.375rem; }
+    .card p { color: var(--muted); font-size: 0.8375rem; line-height: 1.55; }
+
+    /* Timeline */
+    .timeline-section { margin-bottom: 3.5rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
+    .timeline { display: grid; gap: 0; }
+    .timeline-item { display: flex; gap: 1.25rem; padding: 0.875rem 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+    .timeline-item:last-child { border-bottom: none; }
+    .timeline-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 0.45rem; }
+    .timeline-text { font-size: 0.875rem; color: var(--text); line-height: 1.5; }
+    .timeline-text span { color: var(--muted); font-size: 0.8125rem; }
+
+    /* Contact */
+    .contact-section { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 1.75rem 2rem; }
+    .contact-section h2 { font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
+    .contact-section > p { color: var(--muted); font-size: 0.875rem; line-height: 1.6; margin-bottom: 1.5rem; max-width: 480px; }
+    .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .contact-link { font-size: 0.875rem; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 0.3rem; transition: color 0.15s; }
+    .contact-link:hover { color: var(--text); }
+    .contact-link .link-arrow { color: var(--accent); }
+
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 2rem; text-align: center; font-size: 0.8rem; color: var(--muted); }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="/"><span class="nav-logo-mark">GN</span><span class="nav-logo-name">Guru Navada</span></a>
+  <div class="nav-center">
+    <a class="nav-tab" href="/">Projects</a>
+    <a class="nav-tab" href="/articles/">Articles</a>
+    <a class="nav-tab active" href="/about/">About</a>
+  </div>
+  <div class="nav-right"><a href="https://github.com/gnavada">GitHub →</a></div>
+</nav>
+
+<main>
+  <div class="hero">
+    <div class="hero-eyebrow">About</div>
+    <h1>Product leader.<br/><span>AI builder.</span></h1>
+    <p>I've spent 15+ years at the intersection of financial services and product — fraud, risk, identity, and the platforms that connect it all. I started as an engineer, moved into strategy, and somewhere along the way became obsessed with how AI is changing what product leaders can actually build. Now I build too.</p>
+  </div>
+
+  <div class="what-section">
+    <div class="section-label">What I do</div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-domain">Domain</div>
+        <h2>Fraud, Risk &amp; Identity</h2>
+        <p>15+ years building the infrastructure behind secure money movement — decisioning platforms, KYC, account takeover prevention, and the trust layer that makes financial products usable at scale.</p>
+      </div>
+      <div class="card">
+        <div class="card-domain">Platform thinking</div>
+        <h2>Connected Accounts &amp; Data</h2>
+        <p>Platforms that other product teams build on top of. Self-serve APIs, data pipelines, and the kind of reliability work that never gets a press release but determines whether a product scales.</p>
+      </div>
+      <div class="card">
+        <div class="card-domain">AI builder</div>
+        <h2>Building with AI</h2>
+        <p>MCP servers, Claude skills, and AI agents — not as demos, but as tools I use and share. The portfolio at gnavada.github.io is the output.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline-section">
+    <div class="section-label">Career arc</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-text">Intuit Credit Karma — Staff PM, Identity &amp; Connected Accounts <span>(2023–present)</span></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-text">Varo Bank — Product Leader, Fraud / Risk / Identity <span>(2022–2023)</span></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-text">Western Union — Senior Manager, Fraud Product <span>(2015–2022)</span></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-text">Altimetrik &amp; Wipro — Financial Services Platforms <span>(2011–2015)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-section">
+    <h2>Get in touch</h2>
+    <p>Open to conversations about fraud, identity, AI agents, and product leadership. Reach out directly.</p>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:email2navada@gmail.com"><span class="link-arrow">↗</span> email2navada@gmail.com</a>
+      <a class="contact-link" href="https://linkedin.com/in/gurunavada" target="_blank" rel="noopener"><span class="link-arrow">↗</span> LinkedIn</a>
+      <a class="contact-link" href="https://github.com/gnavada" target="_blank" rel="noopener"><span class="link-arrow">↗</span> GitHub</a>
+      <a class="contact-link" href="https://medium.com/@gurunavada" target="_blank" rel="noopener"><span class="link-arrow">↗</span> Medium</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p><a href="https://github.com/gnavada">github.com/gnavada</a> · <a href="https://medium.com/@gurunavada">medium.com/@gurunavada</a></p>
+</footer>
+</body>
+</html>
