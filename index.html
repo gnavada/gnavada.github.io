@@ -45,7 +45,7 @@
     .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
 
     .card-thumb { width: 100%; height: 110px; display: flex; align-items: center; justify-content: center; position: relative; }
-    .thumb-lumatavo { background: linear-gradient(135deg, #071428 0%, #0e2248 50%, #071c3a 100%); }
+    .thumb-lumatavo { background: #0F2147; }
     .thumb-ainos    { background: linear-gradient(135deg, #080d1a 0%, #0f1f3d 40%, #181040 100%); }
     .thumb-gonogo   { background: linear-gradient(135deg, #061008 0%, #0c2010 40%, #102818 100%); }
     .thumb-transcript { background: linear-gradient(135deg, #0d0a1a 0%, #1a1030 40%, #220d40 100%); }
@@ -59,9 +59,10 @@
     .thumb-icon { font-size: 1.75rem; display: block; margin-bottom: 0.35rem; }
     .thumb-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
 
-    .lumatavo-word { font-size: 1.375rem; font-weight: 900; letter-spacing: -0.03em; color: #fff; }
-    .lumatavo-word em { color: #4fa3e8; font-style: normal; }
-    .lumatavo-sub { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 0.25rem; }
+    .lumatavo-lockup { display: flex; align-items: center; gap: 0.625rem; }
+    .lumatavo-lockup svg { height: 36px; width: 36px; flex-shrink: 0; }
+    .lumatavo-wordmark { font-family: Inter, "Avenir Next", system-ui, sans-serif; font-size: 1.5rem; font-weight: 500; letter-spacing: -0.07em; color: #fff; }
+    .lumatavo-tagline { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #F0A500; margin-top: 0.5rem; opacity: 0.85; }
 
     .card-body { padding: 1.125rem 1.375rem 1.25rem; display: flex; flex-direction: column; flex: 1; }
     .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.375rem; }
@@ -116,8 +117,14 @@
       <a class="project-card" href="https://www.lumatavo.com/" target="_blank" rel="noopener">
         <div class="card-thumb thumb-lumatavo">
           <div class="thumb-inner">
-            <div class="lumatavo-word">Luma<em>tavo</em></div>
-            <div class="lumatavo-sub">GHL Intelligence · BYOC</div>
+            <div class="lumatavo-lockup">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13.75 27.25C13.75 17.44 21.83 9.5 32 9.5C42.17 9.5 50.25 17.44 50.25 27.25" stroke="#F0A500" stroke-width="2.6" stroke-linecap="round"/>
+                <path d="M29.55 18.75L19.25 54H27.55L32 25.15L36.45 54H44.75L34.45 18.75C33.95 17.05 30.05 17.05 29.55 18.75Z" fill="#F0A500"/>
+              </svg>
+              <span class="lumatavo-wordmark">lumatavo</span>
+            </div>
+            <div class="lumatavo-tagline">GHL Intelligence · BYOC</div>
           </div>
         </div>
         <div class="card-body">
