@@ -10,7 +10,7 @@ Portfolio of AI tools, frameworks, Chrome extensions, and developer utilities by
 
 | Project | Description |
 |---|---|
-| [Lumatavo](https://www.lumatavo.com/) | AI-native travel companion — plans, personalizes, and guides journeys end-to-end. |
+| [Lumatavo](https://www.lumatavo.com/) | Hosted multi-tenant MCP platform for GoHighLevel agencies. Ask your GHL data plain-English questions — show rates, setter performance, call dispositions — and get grounded answers in seconds. No dashboards, no exports. |
 
 ### Frameworks & Dev Tools
 
