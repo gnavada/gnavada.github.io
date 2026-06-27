@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Transcript Capture — Real-Time Call Transcription for Any Browser Tab</title>
+  <title>Transcript Capture: Real-Time Call Transcription for Any Browser Tab</title>
   <meta name="description" content="A Chrome extension that captures real-time speech transcription from any browser tab with acoustic speaker diarization. Works on Meet, Zoom, Teams, and VPN." />
   <style>
     :root {
@@ -97,7 +97,7 @@
 <section class="hero">
   <div class="badge">Chrome Extension · Deepgram · Speaker Diarization</div>
   <h1>Every word. Every speaker.<br /><span class="highlight">Every call.</span></h1>
-  <p>Real-time transcription for Google Meet, Zoom, Teams — any browser tab. Acoustic speaker diarization identifies who said what. Saves automatically to local files and GitHub. VPN-ready.</p>
+  <p>Real-time transcription for Google Meet, Zoom, Teams and any browser tab. Acoustic speaker diarization identifies who said what. Saves automatically to local files and GitHub. VPN-ready.</p>
   <div class="hero-ctas">
     <a class="btn btn-primary" href="mailto:email2navada@gmail.com?subject=Access%20request%3A%20Transcript%20Extension&body=Hi%20Guru%2C%0A%0AI%27d%20like%20to%20learn%20more%20about%20the%20Transcript%20Chrome%20Extension.%0A%0AName%3A%0AUse%20case%3A%0A">Request Access</a>
     <a class="btn btn-secondary" href="#how-it-works">How It Works ↓</a>
@@ -107,7 +107,7 @@
 <section class="section">
   <div class="section-label">Compatibility</div>
   <h2>Works everywhere you meet</h2>
-  <p>Captures audio from the browser tab itself — not screen recording, not a bot joining the call. Any tab that plays audio can be transcribed.</p>
+  <p>Captures audio from the browser tab itself. No screen recording, no bot joining the call. Any tab that plays audio can be transcribed.</p>
   <div class="compat-row">
     <div class="compat-badge">📹 Google Meet</div>
     <div class="compat-badge">📹 Zoom (browser)</div>
@@ -119,15 +119,15 @@
   <div class="terminal">
     <div class="terminal-bar">
       <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
-      <span class="terminal-label">TranscriptCapture — Google Meet</span>
+      <span class="terminal-label">TranscriptCapture · Google Meet</span>
     </div>
     <div class="terminal-body">
       <div class="t-status">● Recording · Speaker diarization active · 00:04:32</div>
       <br />
-      <div><span class="t-speaker">Speaker 1 (00:04:18) </span><span class="t-text">— "The retention numbers are solid but activation is still the gap we need to close."</span></div>
+      <div><span class="t-speaker">Speaker 1 (00:04:18) </span><span class="t-text">"The retention numbers are solid but activation is still the gap we need to close."</span></div>
       <div class="t-meta" style="margin-left:1rem; margin-bottom:0.75rem;">confidence: 0.97 · acoustic match: 94%</div>
 
-      <div><span class="t-speaker">Speaker 2 (00:04:27) </span><span class="t-text">— "Agreed. I'd prioritize the onboarding flow before we touch anything else."</span></div>
+      <div><span class="t-speaker">Speaker 2 (00:04:27) </span><span class="t-text">"Agreed. I'd prioritize the onboarding flow before we touch anything else."</span></div>
       <div class="t-meta" style="margin-left:1rem; margin-bottom:0.75rem;">confidence: 0.95 · acoustic match: 91%</div>
 
       <div class="t-status">✓ Auto-saved → transcripts/2025-06-27/meeting.md · GitHub sync: enabled</div>
@@ -138,22 +138,22 @@
 <section class="section" id="how-it-works">
   <div class="section-label">Features</div>
   <h2>What makes it different</h2>
-  <p>Most transcription tools join as a bot or require you to record the screen. This captures audio directly from the tab — no extra participants, no awkward notices.</p>
+  <p>Most transcription tools join as a bot or require you to record the screen. This captures audio directly from the tab. No extra participants, no awkward notices.</p>
   <div class="feature-grid">
     <div class="feature-card">
       <span class="icon">🎙️</span>
       <h3>Acoustic speaker diarization</h3>
-      <p>Deepgram Nova-2 identifies distinct speakers by voiceprint — not just turn-taking. Each speaker gets consistent labeling throughout the session.</p>
+      <p>Deepgram Nova-2 identifies distinct speakers by voiceprint, not just turn-taking. Each speaker gets consistent labeling throughout the session.</p>
     </div>
     <div class="feature-card">
       <span class="icon">⚡</span>
       <h3>Real-time streaming</h3>
-      <p>WebSocket connection to Deepgram — transcription appears as it's spoken, not after the call ends. No waiting, no post-processing lag.</p>
+      <p>WebSocket connection to Deepgram. Transcription appears as it's spoken, not after the call ends. No waiting, no post-processing lag.</p>
     </div>
     <div class="feature-card">
       <span class="icon">⏸️</span>
       <h3>Pause and resume</h3>
-      <p>Freeze transcription mid-call without losing the session. Resume seamlessly — speaker context and transcript continuity are preserved.</p>
+      <p>Freeze transcription mid-call without losing the session. Resume seamlessly; speaker context and transcript continuity are preserved.</p>
     </div>
     <div class="feature-card">
       <span class="icon">📁</span>
@@ -177,15 +177,15 @@
   <div class="sneak-section" id="sneak-peek">
     <div class="section-label">Sneak Peek</div>
     <h2>Inside the extension</h2>
-    <p style="color: var(--muted); font-size: 0.9375rem;">A look at what's under the hood — full source and setup instructions are in the repo.</p>
+    <p style="color: var(--muted); font-size: 0.9375rem;">A look at what's under the hood. Full source and setup instructions are in the repo.</p>
     <div class="sneak-items">
       <div class="sneak-item">
         <h4><span class="sneak-badge">Module</span> Content Script</h4>
-        <p>Intercepts the tab's audio stream at the browser level — no screen capture, no bots, no additional meeting participants.</p>
+        <p>Intercepts the tab's audio stream at the browser level. No screen capture, no bots, no additional meeting participants.</p>
       </div>
       <div class="sneak-item">
         <h4><span class="sneak-badge">Module</span> Deepgram Bridge</h4>
-        <p>Manages the WebSocket lifecycle — connection, auth, streaming chunks, reconnect on drop — with Deepgram Nova-2's diarization endpoint.</p>
+        <p>Manages the WebSocket lifecycle: connection, auth, streaming chunks, reconnect on drop, with Deepgram Nova-2's diarization endpoint.</p>
       </div>
       <div class="sneak-item">
         <h4><span class="sneak-badge">Module</span> Speaker Tracker</h4>
@@ -193,15 +193,15 @@
       </div>
       <div class="sneak-item">
         <h4><span class="sneak-badge">Module</span> File Writer</h4>
-        <p>Writes all three formats on session end — .txt, .md with structured headers and timestamps, .json with full diarization metadata.</p>
+        <p>Writes all three formats on session end: .txt, .md with structured headers and timestamps, .json with full diarization metadata.</p>
       </div>
       <div class="sneak-item">
         <h4><span class="sneak-badge">Module</span> GitHub Sync</h4>
-        <p>Commits the session folder to your configured repo using the GitHub Contents API — supports PAT auth and GitHub Enterprise endpoints.</p>
+        <p>Commits the session folder to your configured repo using the GitHub Contents API. Supports PAT auth and GitHub Enterprise endpoints.</p>
       </div>
       <div class="sneak-item">
         <h4><span class="sneak-badge">Module</span> Popup UI</h4>
-        <p>Clean controls for start, pause, resume, and stop — with live status display showing current speaker, confidence, and recording duration.</p>
+        <p>Clean controls for start, pause, resume, and stop. Live status shows display showing current speaker, confidence, and recording duration.</p>
       </div>
     </div>
   </div>
@@ -209,7 +209,7 @@
 
 <section class="cta-section">
   <h2>Never lose a call again.</h2>
-  <p>Request access to the extension — source code, setup guide, and GitHub integration instructions included.</p>
+  <p>Request access to the extension. Source code, setup guide, and GitHub integration instructions included.</p>
   <div class="hero-ctas" style="justify-content:center;">
     <a class="btn btn-primary" href="mailto:email2navada@gmail.com?subject=Access%20request%3A%20Transcript%20Extension&body=Hi%20Guru%2C%0A%0AI%27d%20like%20access%20to%20the%20Transcript%20Chrome%20Extension.%0A%0AName%3A%0AUse%20case%3A%0A">Request Access</a>
     <a class="btn btn-secondary" href="https://github.com/gnavada/Transcript-ChromeExtension" target="_blank" rel="noopener">View on GitHub →</a>
