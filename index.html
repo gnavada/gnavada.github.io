@@ -21,9 +21,8 @@
     .nav-right a { color: var(--muted); font-size: 0.875rem; text-decoration: none; }
     .nav-right a:hover { color: var(--text); }
 
-    main { flex: 1; max-width: 720px; margin: 0 auto; padding: 4rem 2rem; width: 100%; }
+    main { flex: 1; max-width: 960px; margin: 0 auto; padding: 4rem 2rem; width: 100%; }
 
-    /* Hero */
     .hero { margin-bottom: 3.5rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
     .hero-eyebrow { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
     .hero h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.2; margin-bottom: 1rem; }
@@ -34,26 +33,45 @@
     .hero-links a:hover { color: var(--text); }
     .hero-links a span { color: var(--accent); }
 
-    /* Section headers */
     .section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1rem; }
     .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
     .section-count { font-size: 0.75rem; color: var(--muted); }
 
-    /* Project cards */
     .project-group { margin-bottom: 2.5rem; }
-    .group-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
-    .projects { display: grid; gap: 0.875rem; }
-    .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; text-decoration: none; color: inherit; display: block; transition: border-color 0.15s; }
-    .project-card:hover { border-color: var(--accent); }
+    .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.875rem; }
+    @media (max-width: 640px) { .projects { grid-template-columns: 1fr; } }
+
+    .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: border-color 0.15s, transform 0.15s; overflow: hidden; }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+    .card-thumb { width: 100%; height: 110px; display: flex; align-items: center; justify-content: center; position: relative; }
+    .thumb-lumatavo { background: linear-gradient(135deg, #071428 0%, #0e2248 50%, #071c3a 100%); }
+    .thumb-ainos    { background: linear-gradient(135deg, #080d1a 0%, #0f1f3d 40%, #181040 100%); }
+    .thumb-gonogo   { background: linear-gradient(135deg, #061008 0%, #0c2010 40%, #102818 100%); }
+    .thumb-transcript { background: linear-gradient(135deg, #0d0a1a 0%, #1a1030 40%, #220d40 100%); }
+    .thumb-intel    { background: linear-gradient(135deg, #060c1a 0%, #0e1b36 50%, #0a1428 100%); }
+    .thumb-data     { background: linear-gradient(135deg, #06090e 0%, #0c1628 50%, #0e1c38 100%); }
+    .thumb-idbot    { background: linear-gradient(135deg, #0d060d 0%, #180a18 50%, #200d20 100%); }
+    .thumb-pm       { background: linear-gradient(135deg, #0d0a06 0%, #1a1408 50%, #221a0a 100%); }
+    .thumb-comm     { background: linear-gradient(135deg, #06100d 0%, #0a1818 50%, #0c2020 100%); }
+
+    .thumb-inner { text-align: center; }
+    .thumb-icon { font-size: 1.75rem; display: block; margin-bottom: 0.35rem; }
+    .thumb-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+
+    .lumatavo-word { font-size: 1.375rem; font-weight: 900; letter-spacing: -0.03em; color: #fff; }
+    .lumatavo-word em { color: #4fa3e8; font-style: normal; }
+    .lumatavo-sub { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 0.25rem; }
+
+    .card-body { padding: 1.125rem 1.375rem 1.25rem; display: flex; flex-direction: column; flex: 1; }
     .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.375rem; }
     .project-card h2 { font-size: 0.9375rem; font-weight: 700; letter-spacing: -0.02em; }
     .arrow { color: var(--muted); font-size: 1rem; flex-shrink: 0; transition: color 0.15s; }
     .project-card:hover .arrow { color: var(--accent); }
-    .project-card p { color: var(--muted); font-size: 0.8375rem; line-height: 1.55; margin-bottom: 0.875rem; }
-    .tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .project-card p { color: var(--muted); font-size: 0.8375rem; line-height: 1.55; margin-bottom: 0.875rem; flex: 1; }
+    .tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: auto; }
     .tag { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); background: rgba(15,82,186,0.08); border: 1px solid rgba(15,82,186,0.2); padding: 0.18rem 0.45rem; border-radius: 4px; }
 
-    /* Writing teaser */
     .writing-teaser { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; text-decoration: none; color: inherit; transition: border-color 0.15s; }
     .writing-teaser:hover { border-color: var(--accent); }
     .writing-teaser-left h3 { font-size: 0.9375rem; font-weight: 700; margin-bottom: 0.25rem; }
@@ -80,7 +98,7 @@
   <div class="hero">
     <div class="hero-eyebrow">Product Leader · AI &amp; Fintech</div>
     <h1>Building at the intersection of<br /><span>AI, data, and product.</span></h1>
-    <p>I build tools that make complex workflows feel effortless — MCP servers, Claude skills, and AI agents. I also write about fintech, fraud, and what AI is actually becoming.</p>
+    <p>I build tools that make complex workflows feel effortless — MCP servers, Claude skills, AI agents, and developer frameworks. I also write about fintech, fraud, and what AI is actually becoming.</p>
     <div class="hero-links">
       <a href="https://github.com/gnavada"><span>↗</span> GitHub</a>
       <a href="https://medium.com/@gurunavada"><span>↗</span> Medium</a>
@@ -88,6 +106,70 @@
     </div>
   </div>
 
+  <!-- Products & Ventures -->
+  <div class="project-group">
+    <div class="section-header">
+      <span class="section-label">Products &amp; Ventures</span>
+      <span class="section-count">1 product</span>
+    </div>
+    <div class="projects" style="grid-template-columns: repeat(2, 1fr);">
+      <a class="project-card" href="https://www.lumatavo.com/" target="_blank" rel="noopener">
+        <div class="card-thumb thumb-lumatavo">
+          <div class="thumb-inner">
+            <div class="lumatavo-word">Luma<em>tavo</em></div>
+            <div class="lumatavo-sub">AI Travel Companion</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-top"><h2>Lumatavo</h2><span class="arrow">↗</span></div>
+          <p>Travel shouldn't require a spreadsheet. Lumatavo is an AI-native travel companion that plans, personalizes, and navigates your journeys end-to-end — from first spark of inspiration to "we should go back."</p>
+          <div class="tags"><span class="tag">Travel AI</span><span class="tag">Consumer</span><span class="tag">Product</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Frameworks & Dev Tools -->
+  <div class="project-group">
+    <div class="section-header">
+      <span class="section-label">Frameworks &amp; Dev Tools</span>
+      <span class="section-count">3 projects</span>
+    </div>
+    <div class="projects">
+      <a class="project-card" href="/ai-native-os/">
+        <div class="card-thumb thumb-ainos">
+          <div class="thumb-inner"><span class="thumb-icon">⚙️</span><div class="thumb-label">Build · Govern · Ship</div></div>
+        </div>
+        <div class="card-body">
+          <div class="card-top"><h2>AI-Native Operating System</h2><span class="arrow">↗</span></div>
+          <p>A governance-enforced framework for building software with AI agents — without losing control. Adversarial review loops, decision records, and reusable templates that scale from solo projects to teams.</p>
+          <div class="tags"><span class="tag">AI Governance</span><span class="tag">Framework</span><span class="tag">Dev Tools</span></div>
+        </div>
+      </a>
+      <a class="project-card" href="/go-no-go/">
+        <div class="card-thumb thumb-gonogo">
+          <div class="thumb-inner"><span class="thumb-icon">🎯</span><div class="thumb-label">Kill Fast · Score Right</div></div>
+        </div>
+        <div class="card-body">
+          <div class="card-top"><h2>Go/No-Go Framework</h2><span class="arrow">↗</span></div>
+          <p>A calibrated business idea evaluation system. 7 hard constraints kill bad ideas instantly. 8 scoring dimensions separate winners from maybes. Built on 28 real idea evaluations — not theory.</p>
+          <div class="tags"><span class="tag">Founder Tools</span><span class="tag">Framework</span><span class="tag">Decision Making</span></div>
+        </div>
+      </a>
+      <a class="project-card" href="/transcript-extension/">
+        <div class="card-thumb thumb-transcript">
+          <div class="thumb-inner"><span class="thumb-icon">🎙️</span><div class="thumb-label">Every Word · Every Call</div></div>
+        </div>
+        <div class="card-body">
+          <div class="card-top"><h2>Transcript Chrome Extension</h2><span class="arrow">↗</span></div>
+          <p>Real-time transcription for any browser tab — Meet, Zoom, Teams. Deepgram acoustic diarization identifies each speaker. Saves to local files and GitHub automatically. VPN-compatible.</p>
+          <div class="tags"><span class="tag">Chrome Extension</span><span class="tag">Deepgram</span><span class="tag">Productivity</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- AI & Data Tools -->
   <div class="project-group">
     <div class="section-header">
       <span class="section-label">AI &amp; Data Tools</span>
@@ -95,44 +177,39 @@
     </div>
     <div class="projects">
       <a class="project-card" href="/customer-intel-mcp/">
-        <div class="card-top">
-          <h2>customer-intel-mcp</h2>
-          <span class="arrow">↗</span>
+        <div class="card-thumb thumb-intel">
+          <div class="thumb-inner"><span class="thumb-icon">🔍</span><div class="thumb-label">Natural Language · Customer Data</div></div>
         </div>
-        <p>47 tools that give Claude Desktop the ability to analyze customer data via natural language — cohort research, churn scoring, market sizing, and PM briefs. Zero SQL from the user.</p>
-        <div class="tags">
-          <span class="tag">Customer Intelligence</span>
-          <span class="tag">MCP</span>
-          <span class="tag">BigQuery</span>
+        <div class="card-body">
+          <div class="card-top"><h2>customer-intel-mcp</h2><span class="arrow">↗</span></div>
+          <p>47 tools that give Claude Desktop the ability to analyze customer data via natural language — cohort research, churn scoring, market sizing, and PM briefs. Zero SQL from the user.</p>
+          <div class="tags"><span class="tag">Customer Intelligence</span><span class="tag">MCP</span><span class="tag">BigQuery</span></div>
         </div>
       </a>
       <a class="project-card" href="/enterprise-data-claude-mcp/">
-        <div class="card-top">
-          <h2>enterprise-data-claude</h2>
-          <span class="arrow">↗</span>
+        <div class="card-thumb thumb-data">
+          <div class="thumb-inner"><span class="thumb-icon">📊</span><div class="thumb-label">BigQuery · GitHub · Anomaly Detection</div></div>
         </div>
-        <p>MCP server giving Claude Desktop direct BigQuery and GitHub access — with automatic anomaly detection, forecasting, and statistical insights surfaced on every query. 13 tools.</p>
-        <div class="tags">
-          <span class="tag">Data Analytics</span>
-          <span class="tag">MCP</span>
-          <span class="tag">BigQuery</span>
+        <div class="card-body">
+          <div class="card-top"><h2>enterprise-data-claude</h2><span class="arrow">↗</span></div>
+          <p>MCP server giving Claude Desktop direct BigQuery and GitHub access — with automatic anomaly detection, forecasting, and statistical insights surfaced on every query. 13 tools.</p>
+          <div class="tags"><span class="tag">Data Analytics</span><span class="tag">MCP</span><span class="tag">BigQuery</span></div>
         </div>
       </a>
       <a class="project-card" href="/id-bot/">
-        <div class="card-top">
-          <h2>ID-Bot</h2>
-          <span class="arrow">↗</span>
+        <div class="card-thumb thumb-idbot">
+          <div class="thumb-inner"><span class="thumb-icon">🤖</span><div class="thumb-label">Watch · Trigger · Execute</div></div>
         </div>
-        <p>A trigger-driven AI agent platform. Define what to watch for and what to do — ID-Bot detects the trigger and executes the task autonomously in a real browser.</p>
-        <div class="tags">
-          <span class="tag">AI Agent</span>
-          <span class="tag">Automation</span>
-          <span class="tag">Claude</span>
+        <div class="card-body">
+          <div class="card-top"><h2>ID-Bot</h2><span class="arrow">↗</span></div>
+          <p>A trigger-driven AI agent platform. Define what to watch for and what to do — ID-Bot detects the trigger and executes the task autonomously in a real browser.</p>
+          <div class="tags"><span class="tag">AI Agent</span><span class="tag">Automation</span><span class="tag">Claude</span></div>
         </div>
       </a>
     </div>
   </div>
 
+  <!-- PM & Leadership Skills -->
   <div class="project-group">
     <div class="section-header">
       <span class="section-label">PM &amp; Leadership Skills</span>
@@ -140,27 +217,23 @@
     </div>
     <div class="projects">
       <a class="project-card" href="/pm-excellence/">
-        <div class="card-top">
-          <h2>PM Excellence</h2>
-          <span class="arrow">↗</span>
+        <div class="card-thumb thumb-pm">
+          <div class="thumb-inner"><span class="thumb-icon">🧠</span><div class="thumb-label">Strategy · Metrics · Navigation</div></div>
         </div>
-        <p>A complete PM operating system for Claude — decision frameworks, metrics architecture, stakeholder navigation, and a personal calibration layer. Load once, calibrated for your role.</p>
-        <div class="tags">
-          <span class="tag">PM Strategy</span>
-          <span class="tag">Claude Skill</span>
-          <span class="tag">Frameworks</span>
+        <div class="card-body">
+          <div class="card-top"><h2>PM Excellence</h2><span class="arrow">↗</span></div>
+          <p>A complete PM operating system for Claude — decision frameworks, metrics architecture, stakeholder navigation, and a personal calibration layer. Load once, calibrated for your role.</p>
+          <div class="tags"><span class="tag">PM Strategy</span><span class="tag">Claude Skill</span><span class="tag">Frameworks</span></div>
         </div>
       </a>
       <a class="project-card" href="/communicator-excellence/">
-        <div class="card-top">
-          <h2>Communicator Excellence</h2>
-          <span class="arrow">↗</span>
+        <div class="card-thumb thumb-comm">
+          <div class="thumb-inner"><span class="thumb-icon">✍️</span><div class="thumb-label">Altitude · Clarity · Impact</div></div>
         </div>
-        <p>A communication framework for product leaders — altitude control, emotional calibration, and a Claude skill that applies it in real time to everything you write. Not advice. A system.</p>
-        <div class="tags">
-          <span class="tag">Communication</span>
-          <span class="tag">Claude Skill</span>
-          <span class="tag">Product Leaders</span>
+        <div class="card-body">
+          <div class="card-top"><h2>Communicator Excellence</h2><span class="arrow">↗</span></div>
+          <p>A communication framework for product leaders — altitude control, emotional calibration, and a Claude skill that applies it in real time to everything you write. Not advice. A system.</p>
+          <div class="tags"><span class="tag">Communication</span><span class="tag">Claude Skill</span><span class="tag">Product Leaders</span></div>
         </div>
       </a>
     </div>
