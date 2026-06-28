@@ -284,6 +284,7 @@
     /* ── SCROLL REVEAL ── */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 
   </style>
 </head>
@@ -736,7 +737,7 @@
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
     });
-  }, { threshold: 0.08 });
+  }, { threshold: 0.05, rootMargin: '100px 0px 0px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
   // Nav background on scroll
