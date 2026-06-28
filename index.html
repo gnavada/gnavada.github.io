@@ -15,8 +15,8 @@
       --surface2: #12152200;
       --border: #1c2035;
       --border2: #252840;
-      --accent: #6366f1;
-      --accent2: #8b5cf6;
+      --accent: #0F52BA;
+      --accent2: #1a6fe8;
       --amber: #f59e0b;
       --green: #10b981;
       --text: #f1f5f9;
@@ -72,7 +72,7 @@
       border: 1px solid var(--border2);
       transition: border-color 0.15s, background 0.15s;
     }
-    .nav-cta:hover { border-color: var(--accent); background: rgba(99,102,241,0.08); }
+    .nav-cta:hover { border-color: var(--accent); background: rgba(15,82,186,0.08); }
 
     /* ── HERO ── */
     .hero {
@@ -114,7 +114,7 @@
     }
     .hero-headline .line { display: block; }
     .hero-headline .gradient-text {
-      background: linear-gradient(135deg, #818cf8 0%, #a78bfa 40%, #38bdf8 100%);
+      background: linear-gradient(135deg, #4d9de0 0%, #4d9de0 40%, #38bdf8 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
@@ -136,10 +136,10 @@
       padding: 0.75rem 1.625rem; border-radius: 10px;
       background: var(--accent); color: #fff;
       font-weight: 600; font-size: 0.9375rem; text-decoration: none;
-      box-shadow: 0 0 32px rgba(99,102,241,0.35);
+      box-shadow: 0 0 32px rgba(15,82,186,0.35);
       transition: transform 0.15s, box-shadow 0.15s;
     }
-    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 0 48px rgba(99,102,241,0.5); }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 0 48px rgba(15,82,186,0.5); }
     .btn-ghost {
       display: inline-flex; align-items: center; gap: 0.5rem;
       padding: 0.75rem 1.5rem; border-radius: 10px;
@@ -147,7 +147,7 @@
       text-decoration: none; border: 1px solid var(--border2);
       transition: color 0.15s, border-color 0.15s, background 0.15s;
     }
-    .btn-ghost:hover { color: var(--text); border-color: var(--accent); background: rgba(99,102,241,0.06); }
+    .btn-ghost:hover { color: var(--text); border-color: var(--accent); background: rgba(15,82,186,0.06); }
 
     /* stats */
     .hero-stats {
@@ -206,7 +206,7 @@
     }
     .project-card::after {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(99,102,241,0.04), transparent);
+      background: linear-gradient(135deg, rgba(15,82,186,0.04), transparent);
       opacity: 0; transition: opacity 0.2s; pointer-events: none;
     }
     .project-card:hover { background: #0f1120; }
@@ -230,8 +230,8 @@
     .card-tags { display: flex; gap: 0.375rem; flex-wrap: wrap; margin-top: auto; }
     .tag {
       font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-      color: var(--accent); background: rgba(99,102,241,0.08);
-      border: 1px solid rgba(99,102,241,0.18);
+      color: var(--accent); background: rgba(15,82,186,0.08);
+      border: 1px solid rgba(15,82,186,0.18);
       padding: 0.18rem 0.5rem; border-radius: 4px;
     }
 
@@ -286,6 +286,57 @@
     /* ── SCROLL REVEAL ── */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── PRIVATE CARD BADGE ── */
+    .private-card { position: relative; }
+    .private-card::before {
+      content: '🔒 Private';
+      position: absolute; top: 10px; right: 10px; z-index: 2;
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      background: rgba(15,82,186,0.15); color: var(--accent);
+      border: 1px solid rgba(15,82,186,0.3); border-radius: 4px;
+      padding: 2px 7px; pointer-events: none;
+    }
+
+    /* ── REQUEST ACCESS MODAL ── */
+    .ra-overlay {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(6,7,13,0.85); backdrop-filter: blur(8px);
+      align-items: center; justify-content: center; padding: 1.5rem;
+    }
+    .ra-overlay.open { display: flex; }
+    .ra-modal {
+      background: #0d0f1a; border: 1px solid #252840;
+      border-radius: 18px; padding: 2.5rem;
+      max-width: 440px; width: 100%;
+      animation: modal-in 0.22s ease;
+    }
+    @keyframes modal-in {
+      from { opacity: 0; transform: translateY(16px) scale(0.97); }
+      to   { opacity: 1; transform: none; }
+    }
+    .ra-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .ra-modal h2 { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+    .ra-modal p { font-size: 0.875rem; color: #94a3b8; line-height: 1.6; margin-bottom: 1.75rem; }
+    .ra-modal p strong { color: #f1f5f9; font-weight: 600; }
+    .ra-actions { display: flex; flex-direction: column; gap: 0.75rem; }
+    .ra-btn-primary {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.75rem 1.5rem; border-radius: 10px;
+      background: var(--accent); color: #fff;
+      font-weight: 600; font-size: 0.9375rem; text-decoration: none;
+      border: none; cursor: pointer; width: 100%;
+      transition: opacity 0.15s;
+    }
+    .ra-btn-primary:hover { opacity: 0.88; }
+    .ra-btn-ghost {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0.7rem 1.5rem; border-radius: 10px;
+      color: #64748b; font-weight: 500; font-size: 0.875rem;
+      background: none; border: 1px solid #252840; cursor: pointer; width: 100%;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .ra-btn-ghost:hover { color: #f1f5f9; border-color: #3d4a6b; }
   </style>
 </head>
 <body>
@@ -385,11 +436,11 @@
     </div>
     <div class="projects-grid">
       <!-- AI-Native OS -->
-      <a class="project-card" href="/ai-native-os/">
+      <a class="project-card private-card" href="#" data-private="true" data-project="AI-Native Operating System">
         <div class="card-thumb thumb-ainos">
           <svg viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <!-- background glow -->
-            <ellipse cx="200" cy="80" rx="180" ry="65" fill="#6366f1" opacity="0.03"/>
+            <ellipse cx="200" cy="80" rx="180" ry="65" fill="#0F52BA" opacity="0.03"/>
 
             <!-- FLOW 1 label -->
             <text x="20" y="22" fill="#64748b" font-family="monospace" font-size="7" font-weight="700" letter-spacing="0.08em">FLOW 1: IDEA TO PLAN</text>
@@ -435,7 +486,7 @@
             <text x="122" y="107" fill="#f87171" font-family="monospace" font-size="8.5" font-weight="700" text-anchor="middle">CTO</text>
 
             <!-- loop arrow -->
-            <path d="M122 116 Q122 130 86 130 Q49 130 49 116" stroke="#6366f1" stroke-width="1" stroke-dasharray="2 2" fill="none"/>
+            <path d="M122 116 Q122 130 86 130 Q49 130 49 116" stroke="#0F52BA" stroke-width="1" stroke-dasharray="2 2" fill="none"/>
 
             <!-- arrow -->
             <path d="M148 103 L162 103" stroke="#334155" stroke-width="1.2" stroke-dasharray="2 2"/>
@@ -470,7 +521,7 @@
         </div>
       </a>
       <!-- Go/No-Go -->
-      <a class="project-card" href="/go-no-go/">
+      <a class="project-card private-card" href="#" data-private="true" data-project="Go/No-Go Framework">
         <div class="card-thumb thumb-gonogo">
           <svg viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <!-- score bar -->
@@ -500,37 +551,37 @@
         </div>
       </a>
       <!-- Transcript -->
-      <a class="project-card" href="/transcript-extension/" style="grid-column: 1 / -1; max-width: 100%;">
+      <a class="project-card private-card" href="#" data-private="true" data-project="Transcript Chrome Extension" style="grid-column: 1 / -1; max-width: 100%;">
         <div style="display:flex; flex-direction:row;">
           <div class="card-thumb thumb-transcript" style="width:300px; height:auto; flex-shrink:0;">
             <svg viewBox="0 0 300 160" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
               <ellipse cx="150" cy="80" rx="90" ry="50" fill="#7c3aed" opacity="0.08"/>
               <!-- waveform -->
               <g transform="translate(50 80)">
-                <rect x="0"  y="-28" width="6" height="56" rx="3" fill="#a78bfa" opacity="0.9"/>
-                <rect x="10" y="-18" width="6" height="36" rx="3" fill="#a78bfa" opacity="0.7"/>
-                <rect x="20" y="-36" width="6" height="72" rx="3" fill="#a78bfa" opacity="1"/>
-                <rect x="30" y="-22" width="6" height="44" rx="3" fill="#a78bfa" opacity="0.8"/>
-                <rect x="40" y="-14" width="6" height="28" rx="3" fill="#a78bfa" opacity="0.6"/>
-                <rect x="50" y="-30" width="6" height="60" rx="3" fill="#a78bfa" opacity="0.95"/>
-                <rect x="60" y="-20" width="6" height="40" rx="3" fill="#a78bfa" opacity="0.75"/>
-                <rect x="70" y="-10" width="6" height="20" rx="3" fill="#a78bfa" opacity="0.5"/>
-                <rect x="80" y="-32" width="6" height="64" rx="3" fill="#a78bfa" opacity="0.9"/>
-                <rect x="90" y="-16" width="6" height="32" rx="3" fill="#a78bfa" opacity="0.65"/>
-                <rect x="100" y="-24" width="6" height="48" rx="3" fill="#a78bfa" opacity="0.85"/>
-                <rect x="110" y="-12" width="6" height="24" rx="3" fill="#a78bfa" opacity="0.55"/>
-                <rect x="120" y="-34" width="6" height="68" rx="3" fill="#a78bfa" opacity="1"/>
-                <rect x="130" y="-18" width="6" height="36" rx="3" fill="#a78bfa" opacity="0.7"/>
-                <rect x="140" y="-8"  width="6" height="16" rx="3" fill="#a78bfa" opacity="0.45"/>
-                <rect x="150" y="-26" width="6" height="52" rx="3" fill="#a78bfa" opacity="0.88"/>
-                <rect x="160" y="-20" width="6" height="40" rx="3" fill="#a78bfa" opacity="0.72"/>
-                <rect x="170" y="-30" width="6" height="60" rx="3" fill="#a78bfa" opacity="0.92"/>
-                <rect x="180" y="-14" width="6" height="28" rx="3" fill="#a78bfa" opacity="0.6"/>
-                <rect x="190" y="-22" width="6" height="44" rx="3" fill="#a78bfa" opacity="0.8"/>
+                <rect x="0"  y="-28" width="6" height="56" rx="3" fill="#4d9de0" opacity="0.9"/>
+                <rect x="10" y="-18" width="6" height="36" rx="3" fill="#4d9de0" opacity="0.7"/>
+                <rect x="20" y="-36" width="6" height="72" rx="3" fill="#4d9de0" opacity="1"/>
+                <rect x="30" y="-22" width="6" height="44" rx="3" fill="#4d9de0" opacity="0.8"/>
+                <rect x="40" y="-14" width="6" height="28" rx="3" fill="#4d9de0" opacity="0.6"/>
+                <rect x="50" y="-30" width="6" height="60" rx="3" fill="#4d9de0" opacity="0.95"/>
+                <rect x="60" y="-20" width="6" height="40" rx="3" fill="#4d9de0" opacity="0.75"/>
+                <rect x="70" y="-10" width="6" height="20" rx="3" fill="#4d9de0" opacity="0.5"/>
+                <rect x="80" y="-32" width="6" height="64" rx="3" fill="#4d9de0" opacity="0.9"/>
+                <rect x="90" y="-16" width="6" height="32" rx="3" fill="#4d9de0" opacity="0.65"/>
+                <rect x="100" y="-24" width="6" height="48" rx="3" fill="#4d9de0" opacity="0.85"/>
+                <rect x="110" y="-12" width="6" height="24" rx="3" fill="#4d9de0" opacity="0.55"/>
+                <rect x="120" y="-34" width="6" height="68" rx="3" fill="#4d9de0" opacity="1"/>
+                <rect x="130" y="-18" width="6" height="36" rx="3" fill="#4d9de0" opacity="0.7"/>
+                <rect x="140" y="-8"  width="6" height="16" rx="3" fill="#4d9de0" opacity="0.45"/>
+                <rect x="150" y="-26" width="6" height="52" rx="3" fill="#4d9de0" opacity="0.88"/>
+                <rect x="160" y="-20" width="6" height="40" rx="3" fill="#4d9de0" opacity="0.72"/>
+                <rect x="170" y="-30" width="6" height="60" rx="3" fill="#4d9de0" opacity="0.92"/>
+                <rect x="180" y="-14" width="6" height="28" rx="3" fill="#4d9de0" opacity="0.6"/>
+                <rect x="190" y="-22" width="6" height="44" rx="3" fill="#4d9de0" opacity="0.8"/>
               </g>
               <!-- speaker badges -->
-              <rect x="30" y="118" width="66" height="18" rx="9" fill="#a78bfa" fill-opacity="0.15" stroke="#a78bfa" stroke-width="0.75"/>
-              <text x="63" y="130" fill="#a78bfa" font-family="monospace" font-size="8" font-weight="600" text-anchor="middle">Speaker 1</text>
+              <rect x="30" y="118" width="66" height="18" rx="9" fill="#4d9de0" fill-opacity="0.15" stroke="#4d9de0" stroke-width="0.75"/>
+              <text x="63" y="130" fill="#4d9de0" font-family="monospace" font-size="8" font-weight="600" text-anchor="middle">Speaker 1</text>
               <rect x="104" y="118" width="66" height="18" rx="9" fill="#38bdf8" fill-opacity="0.12" stroke="#38bdf8" stroke-width="0.75"/>
               <text x="137" y="130" fill="#38bdf8" font-family="monospace" font-size="8" font-weight="600" text-anchor="middle">Speaker 2</text>
               <rect x="178" y="118" width="52" height="18" rx="9" fill="#10b981" fill-opacity="0.12" stroke="#10b981" stroke-width="0.75"/>
@@ -555,13 +606,13 @@
     </div>
     <div class="projects-grid">
       <!-- customer-intel -->
-      <a class="project-card" href="/customer-intel-mcp/">
+      <a class="project-card private-card" href="#" data-private="true" data-project="customer-intel-mcp">
         <div class="card-thumb thumb-intel">
           <svg viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <ellipse cx="200" cy="80" rx="140" ry="58" fill="#0f172a" opacity="0.8"/>
             <!-- center MCP node -->
-            <circle cx="200" cy="80" r="18" fill="#6366f1" fill-opacity="0.2" stroke="#6366f1" stroke-width="1.5"/>
-            <text x="200" y="84" fill="#6366f1" font-family="monospace" font-size="8" font-weight="700" text-anchor="middle">MCP</text>
+            <circle cx="200" cy="80" r="18" fill="#0F52BA" fill-opacity="0.2" stroke="#0F52BA" stroke-width="1.5"/>
+            <text x="200" y="84" fill="#0F52BA" font-family="monospace" font-size="8" font-weight="700" text-anchor="middle">MCP</text>
             <!-- BigQuery node -->
             <circle cx="100" cy="44" r="14" fill="#1e293b" stroke="#334155" stroke-width="1"/>
             <text x="100" y="41" fill="#94a3b8" font-family="monospace" font-size="6.5" font-weight="700" text-anchor="middle">Big</text>
@@ -579,10 +630,10 @@
             <text x="300" y="113" fill="#94a3b8" font-family="monospace" font-size="6.5" font-weight="700" text-anchor="middle">Claude</text>
             <text x="300" y="123" fill="#94a3b8" font-family="monospace" font-size="6.5" font-weight="700" text-anchor="middle">Desktop</text>
             <!-- connection lines -->
-            <line x1="114" y1="52" x2="183" y2="70" stroke="#6366f1" stroke-width="1" stroke-dasharray="3 2" opacity="0.6"/>
-            <line x1="286" y1="52" x2="217" y2="70" stroke="#6366f1" stroke-width="1" stroke-dasharray="3 2" opacity="0.6"/>
-            <line x1="114" y1="108" x2="183" y2="90" stroke="#6366f1" stroke-width="1" stroke-dasharray="3 2" opacity="0.6"/>
-            <line x1="286" y1="108" x2="217" y2="90" stroke="#6366f1" stroke-width="1" stroke-dasharray="3 2" opacity="0.6"/>
+            <line x1="114" y1="52" x2="183" y2="70" stroke="#0F52BA" stroke-width="1" stroke-dasharray="3 2" opacity="0.6"/>
+            <line x1="286" y1="52" x2="217" y2="70" stroke="#0F52BA" stroke-width="1" stroke-dasharray="3 2" opacity="0.6"/>
+            <line x1="114" y1="108" x2="183" y2="90" stroke="#0F52BA" stroke-width="1" stroke-dasharray="3 2" opacity="0.6"/>
+            <line x1="286" y1="108" x2="217" y2="90" stroke="#0F52BA" stroke-width="1" stroke-dasharray="3 2" opacity="0.6"/>
             <text x="200" y="150" fill="#334155" font-family="monospace" font-size="8" text-anchor="middle">47 tools · zero SQL</text>
           </svg>
         </div>
@@ -593,7 +644,7 @@
         </div>
       </a>
       <!-- enterprise-data -->
-      <a class="project-card" href="/enterprise-data-claude-mcp/">
+      <a class="project-card private-card" href="#" data-private="true" data-project="enterprise-data-claude">
         <div class="card-thumb thumb-data">
           <svg viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <!-- chart bars -->
@@ -621,14 +672,14 @@
         </div>
       </a>
       <!-- ID-Bot -->
-      <a class="project-card" href="/id-bot/" style="grid-column: 1 / -1;">
+      <a class="project-card private-card" href="#" data-private="true" data-project="ID-Bot" style="grid-column: 1 / -1;">
         <div style="display:flex; flex-direction:row;">
           <div class="card-thumb thumb-idbot" style="width:300px; height:auto; flex-shrink:0;">
             <svg viewBox="0 0 300 160" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
               <ellipse cx="150" cy="80" rx="80" ry="50" fill="#7c3aed" opacity="0.06"/>
               <!-- trigger → detect → execute flow -->
               <rect x="20" y="62" width="64" height="36" rx="8" fill="#1e1030" stroke="#4c1d95" stroke-width="1"/>
-              <text x="52" y="76" fill="#a78bfa" font-family="monospace" font-size="8" font-weight="700" text-anchor="middle">TRIGGER</text>
+              <text x="52" y="76" fill="#4d9de0" font-family="monospace" font-size="8" font-weight="700" text-anchor="middle">TRIGGER</text>
               <text x="52" y="90" fill="#64748b" font-family="monospace" font-size="7" text-anchor="middle">define</text>
               <path d="M84 80 L104 80" stroke="#4c1d95" stroke-width="1.5"/>
               <path d="M100 76 L106 80 L100 84" fill="none" stroke="#4c1d95" stroke-width="1.5" stroke-linecap="round"/>
@@ -637,7 +688,7 @@
               <text x="136" y="90" fill="#64748b" font-family="monospace" font-size="7" text-anchor="middle">AI watch</text>
               <path d="M168 80 L188 80" stroke="#7c3aed" stroke-width="1.5"/>
               <path d="M184 76 L190 80 L184 84" fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round"/>
-              <rect x="188" y="62" width="72" height="36" rx="8" fill="#200d40" stroke="#a78bfa" stroke-width="1.5"/>
+              <rect x="188" y="62" width="72" height="36" rx="8" fill="#001a40" stroke="#4d9de0" stroke-width="1.5"/>
               <text x="224" y="76" fill="#e9d5ff" font-family="monospace" font-size="8" font-weight="700" text-anchor="middle">EXECUTE</text>
               <text x="224" y="90" fill="#64748b" font-family="monospace" font-size="7" text-anchor="middle">real browser</text>
               <!-- live badge -->
@@ -662,7 +713,7 @@
       <span class="section-count">2 projects</span>
     </div>
     <div class="projects-grid">
-      <a class="project-card" href="/pm-excellence/">
+      <a class="project-card private-card" href="#" data-private="true" data-project="PM Excellence">
         <div class="card-thumb thumb-pm">
           <svg viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <!-- concentric rings -->
@@ -683,7 +734,7 @@
           <div class="card-tags"><span class="tag">PM Strategy</span><span class="tag">Claude Skill</span><span class="tag">Frameworks</span></div>
         </div>
       </a>
-      <a class="project-card" href="/communicator-excellence/">
+      <a class="project-card private-card" href="#" data-private="true" data-project="Communicator Excellence">
         <div class="card-thumb thumb-comm">
           <svg viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <!-- altitude lines -->
@@ -729,6 +780,19 @@
 <footer>
   <p><a href="https://github.com/gnavada">github.com/gnavada</a> · <a href="https://medium.com/@gurunavada">medium.com/@gurunavada</a></p>
 </footer>
+
+<!-- Request Access Modal -->
+<div class="ra-overlay" id="raOverlay">
+  <div class="ra-modal">
+    <div class="ra-icon">🔒</div>
+    <h2 id="raTitle">This repo is private</h2>
+    <p>The source code for <strong id="raProject"></strong> is currently private. Drop me a note and I'll get back to you shortly.</p>
+    <div class="ra-actions">
+      <a class="ra-btn-primary" id="raEmailBtn" href="#">Request access →</a>
+      <button class="ra-btn-ghost" id="raClose">Maybe later</button>
+    </div>
+  </div>
+</div>
 
 <script>
   // Scroll reveal
@@ -779,6 +843,33 @@
     el.textContent = '0';
     statObserver.observe(el);
   });
+
+  // Request access modal
+  const overlay = document.getElementById('raOverlay');
+  const raTitle = document.getElementById('raTitle');
+  const raProject = document.getElementById('raProject');
+  const raEmailBtn = document.getElementById('raEmailBtn');
+  const raClose = document.getElementById('raClose');
+
+  document.querySelectorAll('.private-card').forEach(card => {
+    card.addEventListener('click', e => {
+      e.preventDefault();
+      const project = card.dataset.project || 'this project';
+      raTitle.textContent = 'This repo is private';
+      raProject.textContent = project;
+      raEmailBtn.href = `mailto:email2navada@gmail.com?subject=Request access: ${encodeURIComponent(project)}&body=Hi Guru,%0A%0AI'd love to get access to ${encodeURIComponent(project)}.%0A%0AThanks`;
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  const closeModal = () => {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+  raClose.addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 </script>
 </body>
 </html>
