@@ -10,7 +10,7 @@ Portfolio of AI tools, frameworks, Chrome extensions, and developer utilities by
 
 | Project | Description |
 |---|---|
-| [Lumatavo](https://www.lumatavo.com/) | Hosted multi-tenant MCP platform for GoHighLevel agencies. Ask your GHL data plain-English questions — show rates, setter performance, call dispositions — and get grounded answers in seconds. No dashboards, no exports. |
+| [Lumatavo](https://www.lumatavo.com/) | Hosted multi-tenant MCP platform for GoHighLevel agencies. Ask your GHL data plain-English questions: show rates, setter performance, call dispositions. Get grounded answers in seconds. No dashboards, no exports. |
 
 ### Frameworks & Dev Tools
 
@@ -32,8 +32,8 @@ Portfolio of AI tools, frameworks, Chrome extensions, and developer utilities by
 
 | Project | Description |
 |---|---|
-| [PM Excellence](https://gnavada.github.io/pm-excellence/) | Complete PM operating system for Claude — decision frameworks, metrics architecture, and stakeholder navigation. |
-| [Communicator Excellence](https://gnavada.github.io/communicator-excellence/) | Communication framework for product leaders — altitude control, emotional calibration, applied via Claude skill. |
+| [PM Excellence](https://gnavada.github.io/pm-excellence/) | Complete PM operating system for Claude: decision frameworks, metrics architecture, and stakeholder navigation. |
+| [Communicator Excellence](https://gnavada.github.io/communicator-excellence/) | Communication framework for product leaders: altitude control, emotional calibration, applied via Claude skill. |
 
 ## Structure
 
@@ -55,7 +55,7 @@ Source code for each project lives in its own repo. Only landing pages are publi
 
 ## About
 
-Guru Navada is a Senior Product Manager building at the intersection of AI, fintech, and developer tools. He builds MCP servers, Claude skills, AI agents, and frameworks — and writes about fintech, fraud, and what AI is actually becoming.
+Guru Navada is a Product Leader building at the intersection of AI, fintech, and developer tools. He builds MCP servers, Claude skills, AI agents, and frameworks who writes about fintech, fraud, and what AI is actually becoming.
 
 - GitHub: [github.com/gnavada](https://github.com/gnavada)
 - Writing: [medium.com/@gurunavada](https://medium.com/@gurunavada)

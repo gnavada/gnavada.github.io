@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>customer-intel-mcp — Customer Intelligence for Claude Desktop</title>
-  <meta name="description" content="A config-driven MCP server that gives Claude the ability to do customer-level behavioral research, cohort analysis, and PM artifact generation — all via natural language." />
+  <title>customer-intel-mcp: Customer Intelligence for Claude Desktop</title>
+  <meta name="description" content="A config-driven MCP server that gives Claude the ability to do customer-level behavioral research, cohort analysis, and PM artifact generation, all via natural language." />
   <style>
     :root {
       --bg: #0f1117;
@@ -138,7 +138,7 @@
       <div class="dot dot-r"></div>
       <div class="dot dot-y"></div>
       <div class="dot dot-g"></div>
-      <span class="terminal-label">Claude Desktop — customer-intel-mcp</span>
+      <span class="terminal-label">Claude Desktop · customer-intel-mcp</span>
     </div>
     <div class="terminal-body">
       <div class="t-prompt">You → </div>
@@ -149,14 +149,14 @@
 
       <div class="t-finding">⚡ Key Finding</div>
       <div style="margin-left:2rem; color: #e2e8f0; margin-bottom:0.75rem;">
-        <strong>Churning customers share a distinct behavioral pattern — low product depth, high support volume.</strong><br/>
+        <strong>Churning customers share a distinct behavioral pattern: low product depth, high support volume.</strong><br/>
         Median feature adoption 2.1 vs 6.8 across customer base. 3x higher support ticket rate.<br/>
-        Login frequency is unchanged — they're checking in, but not converting.
+        Login frequency is unchanged. They're checking in, but not converting.
       </div>
 
       <div class="t-key">🔑 Key finding:</div>
       <div style="margin-left:2rem; color: #e2e8f0; margin-bottom:0.75rem;">
-        Churn here is a product depth signal, not a satisfaction failure —<br/>
+        Churn here is a product depth signal, not a satisfaction failure.<br/>
         interventions should offer guidance, not product pitches.
       </div>
 
@@ -192,7 +192,7 @@
     </div>
   </div>
 
-  <p><strong>All table paths, column names, and segment definitions come from <code>config.yaml</code></strong> — a single file you fill in once. No hardcoded schema assumptions.</p>
+  <p><strong>All table paths, column names, and segment definitions come from <code>config.yaml</code></strong>, a single file you fill in once. No hardcoded schema assumptions.</p>
 </section>
 
 <section class="section" id="tools">
@@ -228,7 +228,7 @@
 
     <div class="tool-group-label">Impact Measurement</div>
     <div class="tool-card"><h3>get_intervention_impact</h3><p>Pre/post signal movement for a campaign or product launch.</p></div>
-    <div class="tool-card"><h3>get_customer_next_action</h3><p>Best action for a specific customer or cohort right now — individual or batch mode.</p></div>
+    <div class="tool-card"><h3>get_customer_next_action</h3><p>Best action for a specific customer or cohort right now: individual or batch mode.</p></div>
 
     <div class="tool-group-label">Research Memory</div>
     <div class="tool-card"><h3>log_finding</h3><p>Save a research finding to research_log.json. Persists across Claude sessions.</p></div>
@@ -257,21 +257,21 @@
       <div class="step-num">2</div>
       <div class="step-body">
         <h3>Fill in config.yaml</h3>
-        <p><code>cp config.example.yaml config.yaml</code> — then edit with your BigQuery project, dataset, table names, and column mappings. Takes ~10 minutes.</p>
+        <p><code>cp config.example.yaml config.yaml</code>, then edit with your BigQuery project, dataset, table names, and column mappings. Takes ~10 minutes.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-body">
         <h3>Run setup.sh</h3>
-        <p><code>bash setup.sh</code> — creates a Python venv, installs dependencies, and registers the MCP in Claude Desktop automatically.</p>
+        <p><code>bash setup.sh</code>: creates a Python venv, installs dependencies, and registers the MCP in Claude Desktop automatically.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-num">4</div>
       <div class="step-body">
         <h3>Restart Claude Desktop</h3>
-        <p>Quit and reopen Claude Desktop. Ask: <em>"Are you connected to customer-intel-mcp?"</em> — you're ready.</p>
+        <p>Quit and reopen Claude Desktop. Ask: <em>"Are you connected to customer-intel-mcp?"</em> You are ready.</p>
       </div>
     </div>
   </div>
@@ -295,7 +295,7 @@
   <span class="code-key">active_day_rate</span>: <span class="code-val">"engagement_rate"</span>
 
 <span class="code-section">segments:</span>
-  <span class="code-comment"># Define your segments — name, SQL filter, aliases</span>
+  <span class="code-comment"># Define your segments: name, SQL filter, aliases</span>
   - <span class="code-key">name</span>: <span class="code-val">"Champions"</span>
     <span class="code-key">filter</span>: <span class="code-val">"tier = 'champions'"</span>
   - <span class="code-key">name</span>: <span class="code-val">"At Risk"</span>
@@ -319,7 +319,7 @@
     <div class="prompt-card"><div class="tag">Segments</div><p>"Compare my champions segment to my at-risk segment"</p></div>
     <div class="prompt-card"><div class="tag">Research</div><p>"Find customers who are highly engaged but haven't upgraded yet"</p></div>
     <div class="prompt-card"><div class="tag">Product</div><p>"How would my at-risk customers react to a win-back offer?"</p></div>
-    <div class="prompt-card"><div class="tag">Copy</div><p>"Score this email subject line against my churning segment: 'We miss you — here's what's new'"</p></div>
+    <div class="prompt-card"><div class="tag">Copy</div><p>"Score this email subject line against my churning segment: 'We miss you, here's what's new'"</p></div>
     <div class="prompt-card"><div class="tag">Sizing</div><p>"How big is the upsell opportunity in my engaged-but-not-premium segment?"</p></div>
     <div class="prompt-card"><div class="tag">Hypothesis</div><p>"Test this hypothesis: customers who engage in the first 7 days retain better at 30 days"</p></div>
     <div class="prompt-card"><div class="tag">PM artifact</div><p>"Generate an exec summary of everything I've learned about churn this quarter"</p></div>

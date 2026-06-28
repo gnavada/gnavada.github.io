@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>enterprise-data-claude — BigQuery + GitHub MCP for Claude Desktop</title>
+  <title>enterprise-data-claude: BigQuery + GitHub MCP for Claude Desktop</title>
   <meta name="description" content="Config-driven MCP server that gives Claude Desktop direct BigQuery access with automatic anomaly detection, OLS forecasting, and statistical insights.">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -120,7 +120,7 @@
 <div class="hero">
   <div class="hero-badge">MCP Server · BigQuery · GitHub</div>
   <h1>enterprise-data-<em>claude</em></h1>
-  <p>Give Claude Desktop direct access to BigQuery and GitHub — with automatic anomaly detection, OLS forecasting, and statistical insights wrapped around every query.</p>
+  <p>Give Claude Desktop direct access to BigQuery and GitHub, with automatic anomaly detection, OLS forecasting, and statistical insights wrapped around every query.</p>
   <div class="hero-cta">
     <a href="mailto:email2navada@gmail.com?subject=Access%20request%3A%20enterprise-data-claude&body=Hi%20Guru%2C%0A%0AI%27d%20like%20access%20to%20enterprise-data-claude.%0A%0AName%3A%0AOrg%2FContext%3A%0A" class="btn btn-primary">Request Access</a>
     <a href="#setup" class="btn btn-outline">How It Works</a>
@@ -132,7 +132,7 @@
   <div class="terminal">
     <div class="terminal-bar">
       <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
-      <span style="margin-left:0.5rem;font-size:0.8rem;color:#4a5568;">Claude Desktop — enterprise-data-claude</span>
+      <span style="margin-left:0.5rem;font-size:0.8rem;color:#4a5568;">Claude Desktop · enterprise-data-claude</span>
     </div>
     <div class="terminal-body">
       <div><span class="t-prompt">You →</span> Query daily signups from analytics.user_events for the last 90 days and show me any anomalies</div>
@@ -208,11 +208,11 @@
     </div>
     <div class="ai-card">
       <h3>Visualization Suggestions</h3>
-      <p>Detects column types (date, geo, metric, dimension) and recommends the right chart type — line, bar, scatter, choropleth, or heatmap.</p>
+      <p>Detects column types (date, geo, metric, dimension) and recommends the right chart type: line, bar, scatter, choropleth, or heatmap.</p>
     </div>
     <div class="ai-card">
       <h3>Statistical Insights</h3>
-      <p>Outlier count, coefficient of variation, zero concentration, monotonicity detection, and Pareto distribution check — all automatic.</p>
+      <p>Outlier count, coefficient of variation, zero concentration, monotonicity detection, and Pareto distribution check. All automatic.</p>
     </div>
     <div class="ai-card">
       <h3>Session Drift</h3>
@@ -278,7 +278,7 @@ cp config.example.yaml config.yaml
       <div class="step-num">3</div>
       <div>
         <h3>Authenticate with Google Cloud</h3>
-        <p>The server uses your local credentials — no service account keys needed.</p>
+        <p>The server uses your local credentials. No service account keys needed.</p>
         <pre>gcloud auth application-default login</pre>
       </div>
     </div>
@@ -298,9 +298,9 @@ cp config.example.yaml config.yaml
 <!-- Config preview -->
 <div class="section">
   <div class="section-title">config.yaml</div>
-  <div class="section-sub">Everything lives in one file — no environment variables required (though they're supported as overrides).</div>
+  <div class="section-sub">Everything lives in one file. No environment variables required (though they're supported as overrides).</div>
   <div class="config-wrap">
-    <div><span class="cfg-comment"># config.yaml — gitignored, never committed</span></div>
+    <div><span class="cfg-comment"># config.yaml · gitignored, never committed</span></div>
     <div>&nbsp;</div>
     <div><span class="cfg-key">bigquery</span>:</div>
     <div>&nbsp; <span class="cfg-key">billing_project</span>: <span class="cfg-val">"your-gcp-project-id"</span></div>
