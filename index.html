@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Guru Navada: Product, AI & Writing</title>
   <meta name="description" content="Guru Navada · Product Leader building at the intersection of AI, fintech, and developer tools. Projects, frameworks, and essays." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -49,16 +50,13 @@
       color: var(--text); text-decoration: none;
       display: flex; align-items: center; gap: 0.5rem;
     }
-    .nav-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 8px var(--accent);
-      animation: pulse-dot 2s ease-in-out infinite;
+    .nav-logo-mark {
+      width: 30px; height: 30px; border-radius: 8px;
+      background: var(--accent); color: #fff;
+      font-size: 0.75rem; font-weight: 800; letter-spacing: -0.01em;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.6; transform: scale(0.85); }
-    }
+    .nav-logo-name { color: var(--muted); font-size: 0.8125rem; font-weight: 500; }
     .nav-links { display: flex; gap: 0.25rem; }
     .nav-link {
       color: var(--muted); font-size: 0.875rem; font-weight: 500;
@@ -114,7 +112,7 @@
     }
     .hero-headline .line { display: block; }
     .hero-headline .gradient-text {
-      background: linear-gradient(135deg, #4d9de0 0%, #4d9de0 40%, #38bdf8 100%);
+      background: linear-gradient(135deg, #0F52BA 0%, #1a6fe8 50%, #38bdf8 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
@@ -287,56 +285,6 @@
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.visible { opacity: 1; transform: none; }
 
-    /* ── PRIVATE CARD BADGE ── */
-    .private-card { position: relative; }
-    .private-card::before {
-      content: '🔒 Private';
-      position: absolute; top: 10px; right: 10px; z-index: 2;
-      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-      background: rgba(15,82,186,0.15); color: var(--accent);
-      border: 1px solid rgba(15,82,186,0.3); border-radius: 4px;
-      padding: 2px 7px; pointer-events: none;
-    }
-
-    /* ── REQUEST ACCESS MODAL ── */
-    .ra-overlay {
-      display: none; position: fixed; inset: 0; z-index: 200;
-      background: rgba(6,7,13,0.85); backdrop-filter: blur(8px);
-      align-items: center; justify-content: center; padding: 1.5rem;
-    }
-    .ra-overlay.open { display: flex; }
-    .ra-modal {
-      background: #0d0f1a; border: 1px solid #252840;
-      border-radius: 18px; padding: 2.5rem;
-      max-width: 440px; width: 100%;
-      animation: modal-in 0.22s ease;
-    }
-    @keyframes modal-in {
-      from { opacity: 0; transform: translateY(16px) scale(0.97); }
-      to   { opacity: 1; transform: none; }
-    }
-    .ra-icon { font-size: 2rem; margin-bottom: 1rem; }
-    .ra-modal h2 { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
-    .ra-modal p { font-size: 0.875rem; color: #94a3b8; line-height: 1.6; margin-bottom: 1.75rem; }
-    .ra-modal p strong { color: #f1f5f9; font-weight: 600; }
-    .ra-actions { display: flex; flex-direction: column; gap: 0.75rem; }
-    .ra-btn-primary {
-      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-      padding: 0.75rem 1.5rem; border-radius: 10px;
-      background: var(--accent); color: #fff;
-      font-weight: 600; font-size: 0.9375rem; text-decoration: none;
-      border: none; cursor: pointer; width: 100%;
-      transition: opacity 0.15s;
-    }
-    .ra-btn-primary:hover { opacity: 0.88; }
-    .ra-btn-ghost {
-      display: flex; align-items: center; justify-content: center;
-      padding: 0.7rem 1.5rem; border-radius: 10px;
-      color: #64748b; font-weight: 500; font-size: 0.875rem;
-      background: none; border: 1px solid #252840; cursor: pointer; width: 100%;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .ra-btn-ghost:hover { color: #f1f5f9; border-color: #3d4a6b; }
   </style>
 </head>
 <body>
@@ -350,7 +298,7 @@
 
 <!-- Nav -->
 <nav>
-  <a class="nav-logo" href="/"><span class="nav-dot"></span>Guru Navada</a>
+  <a class="nav-logo" href="/"><span class="nav-logo-mark">GN</span><span class="nav-logo-name">Guru Navada</span></a>
   <div class="nav-links">
     <a class="nav-link" href="#projects">Projects</a>
     <a class="nav-link" href="/articles/">Articles</a>
@@ -436,7 +384,7 @@
     </div>
     <div class="projects-grid">
       <!-- AI-Native OS -->
-      <a class="project-card private-card" href="#" data-private="true" data-project="AI-Native Operating System">
+      <a class="project-card" href="/ai-native-os/">
         <div class="card-thumb thumb-ainos">
           <svg viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <!-- background glow -->
@@ -521,7 +469,7 @@
         </div>
       </a>
       <!-- Go/No-Go -->
-      <a class="project-card private-card" href="#" data-private="true" data-project="Go/No-Go Framework">
+      <a class="project-card" href="/go-no-go/">
         <div class="card-thumb thumb-gonogo">
           <svg viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <!-- score bar -->
@@ -551,7 +499,7 @@
         </div>
       </a>
       <!-- Transcript -->
-      <a class="project-card private-card" href="#" data-private="true" data-project="Transcript Chrome Extension" style="grid-column: 1 / -1; max-width: 100%;">
+      <a class="project-card" href="/transcript-extension/" style="grid-column: 1 / -1; max-width: 100%;">
         <div style="display:flex; flex-direction:row;">
           <div class="card-thumb thumb-transcript" style="width:300px; height:auto; flex-shrink:0;">
             <svg viewBox="0 0 300 160" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -606,7 +554,7 @@
     </div>
     <div class="projects-grid">
       <!-- customer-intel -->
-      <a class="project-card private-card" href="#" data-private="true" data-project="customer-intel-mcp">
+      <a class="project-card" href="/customer-intel-mcp/">
         <div class="card-thumb thumb-intel">
           <svg viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <ellipse cx="200" cy="80" rx="140" ry="58" fill="#0f172a" opacity="0.8"/>
@@ -644,7 +592,7 @@
         </div>
       </a>
       <!-- enterprise-data -->
-      <a class="project-card private-card" href="#" data-private="true" data-project="enterprise-data-claude">
+      <a class="project-card" href="/enterprise-data-claude-mcp/">
         <div class="card-thumb thumb-data">
           <svg viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <!-- chart bars -->
@@ -672,7 +620,7 @@
         </div>
       </a>
       <!-- ID-Bot -->
-      <a class="project-card private-card" href="#" data-private="true" data-project="ID-Bot" style="grid-column: 1 / -1;">
+      <a class="project-card" href="/id-bot/" style="grid-column: 1 / -1;">
         <div style="display:flex; flex-direction:row;">
           <div class="card-thumb thumb-idbot" style="width:300px; height:auto; flex-shrink:0;">
             <svg viewBox="0 0 300 160" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -713,7 +661,7 @@
       <span class="section-count">2 projects</span>
     </div>
     <div class="projects-grid">
-      <a class="project-card private-card" href="#" data-private="true" data-project="PM Excellence">
+      <a class="project-card" href="/pm-excellence/">
         <div class="card-thumb thumb-pm">
           <svg viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <!-- concentric rings -->
@@ -734,7 +682,7 @@
           <div class="card-tags"><span class="tag">PM Strategy</span><span class="tag">Claude Skill</span><span class="tag">Frameworks</span></div>
         </div>
       </a>
-      <a class="project-card private-card" href="#" data-private="true" data-project="Communicator Excellence">
+      <a class="project-card" href="/communicator-excellence/">
         <div class="card-thumb thumb-comm">
           <svg viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <!-- altitude lines -->
@@ -781,18 +729,6 @@
   <p><a href="https://github.com/gnavada">github.com/gnavada</a> · <a href="https://medium.com/@gurunavada">medium.com/@gurunavada</a></p>
 </footer>
 
-<!-- Request Access Modal -->
-<div class="ra-overlay" id="raOverlay">
-  <div class="ra-modal">
-    <div class="ra-icon">🔒</div>
-    <h2 id="raTitle">This repo is private</h2>
-    <p>The source code for <strong id="raProject"></strong> is currently private. Drop me a note and I'll get back to you shortly.</p>
-    <div class="ra-actions">
-      <a class="ra-btn-primary" id="raEmailBtn" href="#">Request access →</a>
-      <button class="ra-btn-ghost" id="raClose">Maybe later</button>
-    </div>
-  </div>
-</div>
 
 <script>
   // Scroll reveal
@@ -844,32 +780,6 @@
     statObserver.observe(el);
   });
 
-  // Request access modal
-  const overlay = document.getElementById('raOverlay');
-  const raTitle = document.getElementById('raTitle');
-  const raProject = document.getElementById('raProject');
-  const raEmailBtn = document.getElementById('raEmailBtn');
-  const raClose = document.getElementById('raClose');
-
-  document.querySelectorAll('.private-card').forEach(card => {
-    card.addEventListener('click', e => {
-      e.preventDefault();
-      const project = card.dataset.project || 'this project';
-      raTitle.textContent = 'This repo is private';
-      raProject.textContent = project;
-      raEmailBtn.href = `mailto:email2navada@gmail.com?subject=Request access: ${encodeURIComponent(project)}&body=Hi Guru,%0A%0AI'd love to get access to ${encodeURIComponent(project)}.%0A%0AThanks`;
-      overlay.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    });
-  });
-
-  const closeModal = () => {
-    overlay.classList.remove('open');
-    document.body.style.overflow = '';
-  };
-  raClose.addEventListener('click', closeModal);
-  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 </script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="ra-project" content="enterprise-data-claude" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>enterprise-data-claude: BigQuery + GitHub MCP for Claude Desktop</title>
@@ -106,6 +107,46 @@
     footer a { color: var(--muted); }
 
     .divider { height: 1px; background: var(--border); max-width: 900px; margin: 0 auto; }
+
+    /* ── REQUEST ACCESS MODAL ── */
+    .ra-overlay {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(6,7,13,0.85); backdrop-filter: blur(8px);
+      align-items: center; justify-content: center; padding: 1.5rem;
+    }
+    .ra-overlay.open { display: flex; }
+    .ra-modal {
+      background: #0d0f1a; border: 1px solid #252840;
+      border-radius: 18px; padding: 2.5rem;
+      max-width: 440px; width: 100%;
+      animation: modal-in 0.22s ease;
+    }
+    @keyframes modal-in {
+      from { opacity: 0; transform: translateY(16px) scale(0.97); }
+      to   { opacity: 1; transform: none; }
+    }
+    .ra-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .ra-modal h2 { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+    .ra-modal p { font-size: 0.875rem; color: #94a3b8; line-height: 1.6; margin-bottom: 1.75rem; }
+    .ra-modal p strong { color: #f1f5f9; font-weight: 600; }
+    .ra-actions { display: flex; flex-direction: column; gap: 0.75rem; }
+    .ra-btn-primary {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.75rem 1.5rem; border-radius: 10px;
+      background: #0F52BA; color: #fff;
+      font-weight: 600; font-size: 0.9375rem; text-decoration: none;
+      border: none; cursor: pointer; width: 100%;
+      transition: opacity 0.15s;
+    }
+    .ra-btn-primary:hover { opacity: 0.88; }
+    .ra-btn-ghost {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0.7rem 1.5rem; border-radius: 10px;
+      color: #64748b; font-weight: 500; font-size: 0.875rem;
+      background: none; border: 1px solid #252840; cursor: pointer; width: 100%;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .ra-btn-ghost:hover { color: #f1f5f9; border-color: #3d4a6b; }
   </style>
 </head>
 <body>
@@ -118,7 +159,7 @@
     <a href="/articles/">Articles</a>
     <a href="/about/">About</a>
   </div>
-  <a class="nav-cta" href="https://github.com/gnavada/enterprise-data-claude" target="_blank">GitHub →</a>
+  <a class="nav-cta ra-trigger" href="#">GitHub ↗</a>
 </nav>
 
 <!-- Hero -->
@@ -342,8 +383,51 @@ cp config.example.yaml config.yaml
 </div>
 
 <footer>
-  <p>Built by <a href="/">Guru Navada</a> · <a href="https://github.com/gnavada/enterprise-data-claude" target="_blank">GitHub</a></p>
+  <p>Built by <a href="/">Guru Navada</a> · <a href="#" class="ra-trigger">GitHub</a></p>
 </footer>
 
+
+<!-- Request Access Modal -->
+<div class="ra-overlay" id="raOverlay">
+  <div class="ra-modal">
+    <div class="ra-icon">🔒</div>
+    <h2>This repo is private</h2>
+    <p>The source code for <strong id="raProject"></strong> is currently private. Drop me a note and I'll get back to you shortly.</p>
+    <div class="ra-actions">
+      <a class="ra-btn-primary" id="raEmailBtn" href="#">Request access →</a>
+      <button class="ra-btn-ghost" id="raClose">Maybe later</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Request access modal
+  (function() {
+    var overlay = document.getElementById('raOverlay');
+    var raProject = document.getElementById('raProject');
+    var raEmailBtn = document.getElementById('raEmailBtn');
+    var raClose = document.getElementById('raClose');
+    var projectName = document.querySelector('meta[name="ra-project"]') ?
+      document.querySelector('meta[name="ra-project"]').content : document.title;
+
+    function openModal() {
+      raProject.textContent = projectName;
+      raEmailBtn.href = 'mailto:email2navada@gmail.com?subject=Request access: ' + encodeURIComponent(projectName) + '&body=Hi Guru,%0A%0AI%27d love to get access to ' + encodeURIComponent(projectName) + '.%0A%0AThanks';
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.ra-trigger').forEach(function(el) {
+      el.addEventListener('click', function(e) { e.preventDefault(); openModal(); });
+    });
+    raClose.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function(e) { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+  })();
+</script>
 </body>
 </html>
