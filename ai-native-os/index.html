@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI-Native Operating System: Build AI Software Without Losing Control</title>
-  <meta name="description" content="A governance-enforced framework for building software with AI agents. Adversarial review loops, decision records, and reusable templates that scale." />
+  <title>AI-Native Operating System: Idea to Plan to Build, With Governance at Every Step</title>
+  <meta name="description" content="Two structured flows for AI-assisted software development. Visionary/Skeptic validates your idea. Builder/CTO governs the build. Governance reviews every output before you proceed." />
   <style>
     :root {
       --bg: #0f1117;
@@ -13,6 +13,7 @@
       --accent: #7c6cf8;
       --accent-soft: #3d3770;
       --green: #22c55e;
+      --amber: #f59e0b;
       --text: #e2e8f0;
       --muted: #94a3b8;
       --code-bg: #0d1117;
@@ -31,11 +32,11 @@
     .nav-cta { background: var(--accent); color: #fff !important; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.875rem; font-weight: 600; }
     .nav-cta:hover { background: #6a5ce6; text-decoration: none !important; }
 
-    .hero { text-align: center; padding: 6rem 2rem 4rem; max-width: 800px; margin: 0 auto; }
+    .hero { text-align: center; padding: 6rem 2rem 4rem; max-width: 820px; margin: 0 auto; }
     .badge { display: inline-block; background: var(--accent-soft); color: var(--accent); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.25rem 0.75rem; border-radius: 999px; margin-bottom: 1.5rem; border: 1px solid var(--accent); }
     h1 { font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 1.25rem; }
     h1 .highlight { color: var(--accent); }
-    .hero p { font-size: 1.125rem; color: var(--muted); max-width: 580px; margin: 0 auto 2.5rem; }
+    .hero p { font-size: 1.125rem; color: var(--muted); max-width: 620px; margin: 0 auto 2.5rem; }
     .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
     .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9375rem; cursor: pointer; text-decoration: none; }
     .btn-primary { background: var(--accent); color: #fff; }
@@ -46,28 +47,48 @@
     .section { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; }
     .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
     h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 1rem; }
-    .section > p { color: var(--muted); margin-bottom: 2.5rem; max-width: 580px; }
+    .section > p { color: var(--muted); margin-bottom: 2.5rem; max-width: 600px; }
 
+    /* Problem grid */
     .problem-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 3rem; }
     .problem-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; }
     .problem-card .icon { font-size: 1.5rem; margin-bottom: 0.75rem; display: block; }
     .problem-card h3 { font-size: 0.9375rem; font-weight: 700; margin-bottom: 0.5rem; }
     .problem-card p { font-size: 0.8375rem; color: var(--muted); line-height: 1.5; }
 
-    .how-grid { display: grid; gap: 1.5rem; }
-    .how-step { display: flex; gap: 1.25rem; align-items: flex-start; }
-    .step-num { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--accent-soft); border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 700; color: var(--accent); }
-    .step-body h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
-    .step-body p { font-size: 0.875rem; color: var(--muted); }
+    /* Flow blocks */
+    .flow-block { background: var(--code-bg); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin: 2rem 0; }
+    .flow-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.75rem; }
+    .flow-header-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .flow-header-title { font-size: 0.9375rem; font-weight: 700; color: var(--text); }
+    .flow-header-invoke { margin-left: auto; font-size: 0.75rem; color: var(--muted); font-family: monospace; background: var(--surface); padding: 0.25rem 0.6rem; border-radius: 4px; border: 1px solid var(--border); }
+    .flow-body { padding: 1.5rem; }
+    .flow-stages { display: flex; flex-direction: column; gap: 0.75rem; }
+    .flow-stage { display: flex; align-items: flex-start; gap: 1rem; }
+    .stage-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--accent-soft); border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: var(--accent); margin-top: 2px; }
+    .stage-content { flex: 1; }
+    .stage-content h4 { font-size: 0.875rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .stage-content p { font-size: 0.8125rem; color: var(--muted); line-height: 1.5; }
+    .stage-role { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.15rem 0.5rem; border-radius: 4px; margin-right: 0.35rem; margin-bottom: 0.4rem; }
+    .role-visionary { background: #1c2e4a; color: #60a5fa; border: 1px solid #2d4a75; }
+    .role-skeptic { background: #2d1f3d; color: #c084fc; border: 1px solid #4c3366; }
+    .role-builder { background: #1a2e1a; color: #4ade80; border: 1px solid #2d4d2d; }
+    .role-cto { background: #2e1f1f; color: #f87171; border: 1px solid #4d2d2d; }
+    .role-gov { background: #2a2314; color: var(--amber); border: 1px solid #4d3d1a; }
+    .stage-divider { height: 1px; background: var(--border); margin: 0.75rem 0; }
+    .governance-note { display: flex; align-items: flex-start; gap: 0.75rem; background: #1e1a0a; border: 1px solid #3d3010; border-radius: 8px; padding: 0.875rem 1rem; margin-top: 1rem; }
+    .governance-note .gov-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .governance-note p { font-size: 0.8125rem; color: var(--amber); line-height: 1.5; }
 
-    .flow-viz { background: var(--code-bg); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin: 2.5rem 0; }
-    .flow-row { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
-    .flow-row:last-child { margin-bottom: 0; }
-    .flow-box { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem 1rem; font-size: 0.8125rem; font-weight: 600; white-space: nowrap; }
-    .flow-box.accent { border-color: var(--accent); color: var(--accent); }
-    .flow-arrow { color: var(--muted); font-size: 1rem; }
-    .flow-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); width: 80px; flex-shrink: 0; }
+    /* Roles grid */
+    .roles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; }
+    .role-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; }
+    .role-card .role-tag { display: inline-block; margin-bottom: 0.75rem; }
+    .role-card h3 { font-size: 0.9375rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .role-card .role-lens { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.6rem; }
+    .role-card p { font-size: 0.8125rem; color: var(--muted); line-height: 1.5; }
 
+    /* Sneak peek */
     .sneak-section { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; margin: 0 auto; max-width: 900px; }
     .sneak-section .section-label { margin-bottom: 0.5rem; }
     .sneak-section h2 { margin-bottom: 0.75rem; }
@@ -92,110 +113,178 @@
   <a href="/" class="nav-logo">AI<span>-Native</span> OS</a>
   <div class="nav-links">
     <a href="/">← All Projects</a>
-    <a href="#how-it-works">How it works</a>
-    <a href="#sneak-peek">Sneak peek</a>
+    <a href="#flows">The Flows</a>
+    <a href="#sneak-peek">Templates</a>
   </div>
   <a class="nav-cta" href="https://github.com/gnavada/AI-Native-Operating-System">GitHub →</a>
 </nav>
 
 <section class="hero">
   <div class="badge">Open Source · AI Governance · Dev Framework</div>
-  <h1>Build with AI agents.<br /><span class="highlight">Without losing the wheel.</span></h1>
-  <p>A structured, governance-enforced operating system for AI-assisted software development. Keep quality, auditability, and decision traceability as you scale from a single session to a full initiative.</p>
+  <h1>From raw idea to<br /><span class="highlight">governed, reviewed PR.</span></h1>
+  <p>Two structured flows for AI-assisted development. Visionary and Skeptic stress-test your idea. Builder and CTO govern the build. A governance layer reviews every output before you proceed.</p>
   <div class="hero-ctas">
     <a class="btn btn-primary" href="mailto:email2navada@gmail.com?subject=Access%20request%3A%20AI-Native%20OS&body=Hi%20Guru%2C%0A%0AI%27d%20like%20to%20learn%20more%20about%20the%20AI-Native%20Operating%20System.%0A%0AName%3A%0AUse%20case%3A%0A">Request Access</a>
-    <a class="btn btn-secondary" href="#how-it-works">How It Works ↓</a>
+    <a class="btn btn-secondary" href="#flows">How It Works ↓</a>
   </div>
 </section>
 
 <section class="section">
   <div class="section-label">The Problem</div>
   <h2>AI coding is powerful. And quietly fragile.</h2>
-  <p>One-off agent prompts work. Chains of them, across days and teammates, without guardrails? That's how quality silently erodes.</p>
+  <p>One-off agent prompts work. Chains of them, across sessions and tasks, without guardrails? That is how quality silently erodes.</p>
   <div class="problem-grid">
     <div class="problem-card">
       <span class="icon">🔁</span>
       <h3>No separation of concerns</h3>
-      <p>The same agent that builds your feature also reviews it. There's no adversarial check, no second opinion. Just confirmation bias at machine speed.</p>
+      <p>The same agent that builds your feature also reviews it. No adversarial check, no second opinion. Just confirmation bias at machine speed.</p>
     </div>
     <div class="problem-card">
       <span class="icon">📭</span>
       <h3>Decisions vanish</h3>
-      <p>The "why" behind architecture choices, tradeoffs accepted, constraints imposed. Gone after the session ends. Future agents (and humans) inherit the what, never the why.</p>
+      <p>The "why" behind architecture choices, tradeoffs accepted, constraints imposed. Gone after the session ends. Future agents inherit the what, never the why.</p>
     </div>
     <div class="problem-card">
-      <span class="icon">📈</span>
-      <h3>Doesn't scale past one</h3>
-      <p>Prompting one feature works. Coordinating 10 tasks across sessions, with consistency and no regression? There's no operating model for that.</p>
+      <span class="icon">💡</span>
+      <h3>Ideas skip validation</h3>
+      <p>Raw ideas go straight to implementation with no stress test. Nobody asks who the customer is, why now, or what kills it. The Skeptic never gets a turn.</p>
     </div>
     <div class="problem-card">
       <span class="icon">🎲</span>
-      <h3>Templates don't learn</h3>
-      <p>Every failure is a one-time lesson. Nothing patches the prompt that caused it. The system has no memory of what went wrong or how to prevent recurrence.</p>
+      <h3>Failures don't patch the system</h3>
+      <p>Every incident is a one-time lesson. Nothing updates the prompt that caused it. The system has no memory of what went wrong or how to prevent recurrence.</p>
     </div>
   </div>
 </section>
 
-<section class="section" id="how-it-works">
-  <div class="section-label">Architecture</div>
-  <h2>How the OS works</h2>
-  <p>Five reusable templates and two end-to-end flows structure every build, from idea to code to retrospective.</p>
+<section class="section" id="flows">
+  <div class="section-label">The Two Flows</div>
+  <h2>Structured from first thought to shipped PR.</h2>
+  <p>Two end-to-end flows, each with role separation enforced at every stage and a governance checkpoint before you proceed.</p>
 
-  <div class="flow-viz">
-    <div class="flow-row">
-      <span class="flow-label">Ideation</span>
-      <div class="flow-box accent">Idea Capture</div>
-      <span class="flow-arrow">→</span>
-      <div class="flow-box accent">Plan Template</div>
-      <span class="flow-arrow">→</span>
-      <div class="flow-box">Decision Record</div>
+  <!-- Flow 1 -->
+  <div class="flow-block">
+    <div class="flow-header">
+      <div>
+        <div class="flow-header-label">Flow 1</div>
+        <div class="flow-header-title">idea-to-plan-flow</div>
+      </div>
+      <div class="flow-header-invoke">Load idea-to-plan-flow. My idea: &lt;description&gt;</div>
     </div>
-    <div class="flow-row">
-      <span class="flow-label">Build</span>
-      <div class="flow-box accent">Builder Agent</div>
-      <span class="flow-arrow">→</span>
-      <div class="flow-box accent">CTO Reviewer</div>
-      <span class="flow-arrow">→</span>
-      <div class="flow-box">Adversarial Loop</div>
-    </div>
-    <div class="flow-row">
-      <span class="flow-label">Retro</span>
-      <div class="flow-box">Failure Classification</div>
-      <span class="flow-arrow">→</span>
-      <div class="flow-box accent">Template Patch</div>
-      <span class="flow-arrow">→</span>
-      <div class="flow-box">System Memory</div>
+    <div class="flow-body">
+      <div class="flow-stages">
+        <div class="flow-stage">
+          <div class="stage-num">1</div>
+          <div class="stage-content">
+            <h4>Generate the ideation prompt</h4>
+            <p>Takes your raw idea and produces a structured ideation orchestration prompt, customized to the idea category and Skeptic focus areas.</p>
+          </div>
+        </div>
+        <div class="flow-stage">
+          <div class="stage-num">G</div>
+          <div class="stage-content">
+            <span class="stage-role role-gov">Governance</span>
+            <p>Reviews the prompt for completeness. Loops until approved. No ideation runs on a weak prompt.</p>
+          </div>
+        </div>
+        <div class="flow-stage">
+          <div class="stage-num">2</div>
+          <div class="stage-content">
+            <span class="stage-role role-visionary">Visionary</span>
+            <span class="stage-role role-skeptic">Skeptic</span>
+            <h4>Adversarial ideation loop</h4>
+            <p>Visionary owns problem framing, user value, and strategic direction. Skeptic stress-tests go-to-market reality, competition, and monetization. The loop runs until Skeptic status is ALIGNED and a task list is produced. No idea leaves unclassified: STRONG_SIGNAL, NEEDS_SHARPENING, or PARK_FOR_NOW.</p>
+          </div>
+        </div>
+        <div class="flow-stage">
+          <div class="stage-num">G</div>
+          <div class="stage-content">
+            <span class="stage-role role-gov">Governance</span>
+            <p>Reviews the task list. Loops until approved. CTO runs a feasibility sniff on every task before the list is handed to you.</p>
+          </div>
+        </div>
+      </div>
+      <div class="governance-note">
+        <span class="gov-icon">🔒</span>
+        <p>Output is <strong>TASK LIST READY FOR HUMAN APPROVAL</strong>. Nothing proceeds without your sign-off.</p>
+      </div>
     </div>
   </div>
 
-  <div class="how-grid">
-    <div class="how-step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <h3>Idea → Plan (structured template)</h3>
-        <p>Every initiative starts from a canonical template: goals, constraints, acceptance criteria, and risk flags captured before a single line of code is touched.</p>
+  <!-- Flow 2 -->
+  <div class="flow-block">
+    <div class="flow-header">
+      <div>
+        <div class="flow-header-label">Flow 2</div>
+        <div class="flow-header-title">plan-to-build-flow</div>
+      </div>
+      <div class="flow-header-invoke">Load plan-to-build-flow. Task: &lt;TASK-ID&gt;</div>
+    </div>
+    <div class="flow-body">
+      <div class="flow-stages">
+        <div class="flow-stage">
+          <div class="stage-num">1</div>
+          <div class="stage-content">
+            <h4>Generate the execution orchestration prompt</h4>
+            <p>Takes a single approved task and produces a task-specific execution prompt, with standing invariants baked in and CTO review modes selected for the task type.</p>
+          </div>
+        </div>
+        <div class="flow-stage">
+          <div class="stage-num">G</div>
+          <div class="stage-content">
+            <span class="stage-role role-gov">Governance</span>
+            <p>Reviews the prompt. Verifies all standing invariants are present and unmodified. Loops until approved.</p>
+          </div>
+        </div>
+        <div class="flow-stage">
+          <div class="stage-num">2</div>
+          <div class="stage-content">
+            <span class="stage-role role-builder">Builder</span>
+            <span class="stage-role role-cto">CTO</span>
+            <h4>Adversarial build loop</h4>
+            <p>Builder implements. CTO reviews independently across Architecture, Security, Data Integrity, Operability, and Reliability. CTO issues blockers. Builder fixes them. The loop continues until CTO status is APPROVED with no open blockers. A decision record is produced for every task.</p>
+          </div>
+        </div>
+        <div class="flow-stage">
+          <div class="stage-num">G</div>
+          <div class="stage-content">
+            <span class="stage-role role-gov">Governance</span>
+            <p>Reviews the PR and session report. Verifies all standing invariants hold across the full diff, decision record is complete, and alignment log documents every round. Loops until approved.</p>
+          </div>
+        </div>
+      </div>
+      <div class="governance-note">
+        <span class="gov-icon">🔒</span>
+        <p>Output is <strong>PR READY FOR HUMAN PUSH</strong>. You review and push. No automated force push, no destructive git operations without your sign-off.</p>
       </div>
     </div>
-    <div class="how-step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <h3>Builder/CTO adversarial split</h3>
-        <p>The agent that implements never reviews. A separate CTO-role agent reads the plan and the output independently. No shared context, no soft-ball review.</p>
-      </div>
+  </div>
+</section>
+
+<section class="section" id="roles">
+  <div class="section-label">The Four Roles</div>
+  <h2>Role separation enforced, not suggested.</h2>
+  <p>Each role has a fixed lens and fixed ownership. No role collapses into another. No Orchestrator editing implementation files. No Builder declaring its own review passed.</p>
+  <div class="roles-grid">
+    <div class="role-card">
+      <span class="stage-role role-visionary role-tag">Visionary</span>
+      <div class="role-lens">Lens: CEO / CPO</div>
+      <p>Owns problem framing, user value, and strategic direction. Must answer: what is the 10x opportunity, what are the riskiest assumptions, and why is this defensible.</p>
     </div>
-    <div class="how-step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <h3>Decision records, always</h3>
-        <p>Every non-trivial choice produces a decision record: option considered, constraint that decided it, tradeoff accepted. Future sessions inherit the reasoning, not just the result.</p>
-      </div>
+    <div class="role-card">
+      <span class="stage-role role-skeptic role-tag">Skeptic</span>
+      <div class="role-lens">Lens: CSO / CMO</div>
+      <p>Owns go-to-market reality, competitive differentiation, and monetization path. Stress-tests until hardened or correctly discarded. Must reach ALIGNED status to proceed.</p>
     </div>
-    <div class="how-step">
-      <div class="step-num">4</div>
-      <div class="step-body">
-        <h3>Retrospectives that patch the system</h3>
-        <p>When something fails, the retrospective classifies the failure and patches the template that allowed it. The OS gets smarter with every build cycle.</p>
-      </div>
+    <div class="role-card">
+      <span class="stage-role role-builder role-tag">Builder</span>
+      <div class="role-lens">Lens: Engineer</div>
+      <p>Implements code within task scope. Cannot collapse into Orchestrator. Mandated to follow all seven standing invariants on every task, no exceptions.</p>
+    </div>
+    <div class="role-card">
+      <span class="stage-role role-cto role-tag">CTO</span>
+      <div class="role-lens">Lens: Chief Technical Reviewer</div>
+      <p>Adversarial reviewer. Reviews the full diff independently. Issues blockers Builder must fix. Must reach APPROVED status with no open blockers before the PR is handed back.</p>
     </div>
   </div>
 </section>
@@ -203,40 +292,40 @@
 <div style="padding: 0 2rem 4rem;">
   <div class="sneak-section" id="sneak-peek">
     <div class="section-label">Sneak Peek</div>
-    <h2>What's inside</h2>
-    <p>A look at the templates and flows, without giving away the exact prompt engineering that makes them work.</p>
+    <h2>What is inside</h2>
+    <p>Five templates power both flows. Each is a structured prompt with hard-stop rules, role separation enforced, and governance checkpoints built in.</p>
     <div class="sneak-items">
       <div class="sneak-item">
-        <h4><span class="sneak-badge">Template</span> Idea Capture</h4>
-        <p>Structured intake for any new feature or initiative. Forces clarity on goals, constraints, and success criteria before any agent touches code.</p>
+        <h4><span class="sneak-badge">Template</span> Ideation Prompt Generator</h4>
+        <p>Takes a raw idea and generates the ideation orchestration prompt, tailored to the idea category and the right Skeptic focus areas.</p>
       </div>
       <div class="sneak-item">
-        <h4><span class="sneak-badge">Template</span> Build Plan</h4>
-        <p>Breaks a plan into atomic, reviewable tasks. Each task has a scope boundary so the Builder can't silently expand work.</p>
+        <h4><span class="sneak-badge">Template</span> Ideation Orchestrator</h4>
+        <p>Runs the Visionary / Skeptic loop. Produces a validated problem statement, ambition classification, and a CTO-sniffed task list.</p>
       </div>
       <div class="sneak-item">
-        <h4><span class="sneak-badge">Template</span> CTO Review</h4>
-        <p>A role-anchored review prompt that confronts the output as an independent technical leader, not a yes-man.</p>
+        <h4><span class="sneak-badge">Template</span> Orchestration Prompt Generator</h4>
+        <p>Takes an approved task and generates the execution orchestration prompt with standing invariants and CTO review modes locked in.</p>
       </div>
       <div class="sneak-item">
-        <h4><span class="sneak-badge">Template</span> Decision Record</h4>
-        <p>Lightweight ADR format. Captures option, chosen path, reasoning, and constraints, in one structured block per decision.</p>
+        <h4><span class="sneak-badge">Template</span> Orchestrator (Builder/CTO)</h4>
+        <p>Runs the Builder / CTO adversarial loop. Outputs a reviewed PR and a complete decision record with alignment log for every round.</p>
       </div>
       <div class="sneak-item">
-        <h4><span class="sneak-badge">Template</span> Retrospective</h4>
-        <p>Post-build failure classification and template patch log. Turns each incident into a durable system improvement.</p>
+        <h4><span class="sneak-badge">Template</span> System Retrospective</h4>
+        <p>Reviews completed runs, classifies failures, and recommends patches to the template that allowed the failure. The OS learns from every build cycle.</p>
       </div>
       <div class="sneak-item">
-        <h4><span class="sneak-badge">Flow</span> Idea → Plan → Build</h4>
-        <p>End-to-end chain that sequences templates automatically. Run the flow, get a production-ready task list with review checkpoints baked in.</p>
+        <h4><span class="sneak-badge">Invariants</span> 7 Standing Hard Blocks</h4>
+        <p>Event-loop safety, fail-closed, no silent caps, additive-only migrations, frozen tool contracts, docs in the same PR, and a real-infra gate for async changes. Non-debatable architectural law baked into every task.</p>
       </div>
     </div>
   </div>
 </div>
 
 <section class="cta-section">
-  <h2>Ready to build smarter?</h2>
-  <p>Request access to the full framework: templates, flows, and the governance model that ties them together.</p>
+  <h2>Ready to build with guardrails?</h2>
+  <p>Request access to the full framework: both flows, all five templates, and the governance model that ties them together.</p>
   <div class="hero-ctas" style="justify-content:center;">
     <a class="btn btn-primary" href="mailto:email2navada@gmail.com?subject=Access%20request%3A%20AI-Native%20OS&body=Hi%20Guru%2C%0A%0AI%27d%20like%20access%20to%20the%20AI-Native%20Operating%20System.%0A%0AName%3A%0AUse%20case%3A%0A">Request Access</a>
     <a class="btn btn-secondary" href="https://github.com/gnavada/AI-Native-Operating-System" target="_blank" rel="noopener">View on GitHub →</a>
